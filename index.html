@@ -94,7 +94,7 @@
     .corner-photo {
       position: absolute;
       margin: 0;
-      width: clamp(160px, 20vw, 260px);
+      width: clamp(165px, 21vw, 280px);
       padding: 8px 8px 18px;
       background: #ffffff;
       border-radius: 6px;
@@ -104,11 +104,13 @@
       transition: transform 250ms ease, box-shadow 250ms ease;
     }
 
-    /* Ôm trọn 100% ảnh gốc ở 4 góc, không cắt mất mặt */
+    /* 4 ảnh góc chuẩn khung 3/4 đều đẹp */
     .corner-photo img {
       width: 100%;
-      height: auto;
+      aspect-ratio: 3 / 4;
       display: block;
+      object-fit: cover;
+      object-position: center 20%;
       border-radius: 3px;
     }
 
@@ -229,7 +231,7 @@
     }
 
     /* =======================================================
-       2. PHẦN 8 ẢNH KỶ NIỆM: KHUNG POLAROID ÔM TRỌN 100% ẢNH GỐC
+       2. PHẦN 8 ẢNH KỶ NIỆM: KÍCH THƯỚC ĐỀU NHAU & TRỌN MẶT
        ======================================================= */
     .memories {
       position: relative;
@@ -260,11 +262,12 @@
       margin-bottom: 0;
     }
 
+    /* Tỷ lệ khung đồng đều cho cả 8 tấm, rộng vừa đủ ôm trọn 3 người không cắt mặt */
     .photo {
       position: relative;
       margin: 0;
-      width: min(355px, 95%);
-      height: auto;
+      width: min(365px, 95%);
+      aspect-ratio: 4 / 3.45;
       padding: 12px 12px 34px;
       background: #ffffff;
       border: 1px solid #f0e4c3;
@@ -333,7 +336,7 @@
     .photo-frame {
       position: relative;
       width: 100%;
-      height: auto;
+      height: 100%;
       overflow: hidden;
       border-radius: 2px;
       background: #fdf6df;
@@ -341,8 +344,10 @@
 
     .photo-frame img {
       width: 100%;
-      height: auto;
+      height: 100%;
       display: block;
+      object-fit: cover;
+      object-position: center 22%;
     }
 
     /* =======================================================
@@ -850,7 +855,7 @@
 
     @media (max-width: 700px) {
       section { padding: 70px 18px; }
-      .corner-photo { width: 92px; padding: 5px 5px 12px; }
+      .corner-photo { width: 96px; padding: 5px 5px 12px; }
       .corner-tl { top: 18px; left: 14px; }
       .corner-tr { top: 18px; right: 14px; }
       .corner-bl { bottom: 20px; left: 14px; }
@@ -908,7 +913,7 @@
   </header>
 
   <main>
-    <!-- 2. PHẦN 8 ẢNH KỶ NIỆM (HIỂN THỊ TRỌN VẸN KHÔNG CẮT MẶT) -->
+    <!-- 2. PHẦN 8 ẢNH KỶ NIỆM (ĐỒNG ĐỀU KÍCH THƯỚC & KHÔNG CẮT MẶT) -->
     <section class="memories" id="memories">
       <div class="section-inner">
         <h2 class="section-heading">Our Favourite Moments</h2>
