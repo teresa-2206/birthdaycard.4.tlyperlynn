@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>18th Birthday for Cát Tiên elele</title>
-
   <style>
     :root {
       --pink: #e6a82e;
@@ -35,7 +34,7 @@
       font: inherit;
     }
 
-    /* Nút bật/tắt nhạc nền tự lặp lại cố định ở góc màn hình */
+    /* Nút bật/tắt nhạc nền tự lặp lại cố định ở góc dưới bên phải */
     .floating-music-btn {
       position: fixed;
       right: 20px;
@@ -62,6 +61,9 @@
       background: #7e9d87;
     }
 
+    /* =======================================================
+       1. TRANG MỞ ĐẦU: BẤM NÚT TAP MỚI BUNG CHỮ + 4 ẢNH GÓC
+       ======================================================= */
     .opening {
       position: relative;
       min-height: 100vh;
@@ -82,7 +84,6 @@
       width: min(540px, 100%);
     }
 
-    /* 4 ảnh ở 4 góc màn hình đầu tiên */
     .corner-photos {
       position: absolute;
       inset: 0;
@@ -93,58 +94,31 @@
     .corner-photo {
       position: absolute;
       margin: 0;
-      width: clamp(150px, 19vw, 250px);
+      width: clamp(160px, 20vw, 260px);
       padding: 8px 8px 18px;
       background: #ffffff;
       border-radius: 6px;
       box-shadow: 0 16px 34px rgba(110, 88, 42, 0.18);
       opacity: 0;
-      pointer-events: auto;
+      pointer-events: none;
       transition: transform 250ms ease, box-shadow 250ms ease;
     }
 
+    /* Ôm trọn 100% ảnh gốc ở 4 góc, không cắt mất mặt */
     .corner-photo img {
       width: 100%;
-      aspect-ratio: 3 / 4;
+      height: auto;
       display: block;
-      object-fit: cover;
-      object-position: center 20%;
       border-radius: 3px;
     }
 
-    .corner-tl {
-      top: 5%;
-      left: 4%;
-      --tilt: -8deg;
-      --start-x: -40px;
-      --start-y: -40px;
-    }
-
-    .corner-tr {
-      top: 5%;
-      right: 4%;
-      --tilt: 7deg;
-      --start-x: 40px;
-      --start-y: -40px;
-    }
-
-    .corner-bl {
-      bottom: 6%;
-      left: 5%;
-      --tilt: 6deg;
-      --start-x: -40px;
-      --start-y: 40px;
-    }
-
-    .corner-br {
-      bottom: 6%;
-      right: 5%;
-      --tilt: -7deg;
-      --start-x: 40px;
-      --start-y: 40px;
-    }
+    .corner-tl { top: 5%; left: 4%; --tilt: -8deg; --start-x: -40px; --start-y: -40px; }
+    .corner-tr { top: 5%; right: 4%; --tilt: 7deg; --start-x: 40px; --start-y: -40px; }
+    .corner-bl { bottom: 6%; left: 5%; --tilt: 6deg; --start-x: -40px; --start-y: 40px; }
+    .corner-br { bottom: 6%; right: 5%; --tilt: -7deg; --start-x: 40px; --start-y: 40px; }
 
     .corner-photos.show .corner-photo {
+      pointer-events: auto;
       animation: cornerPop 750ms cubic-bezier(.2, .85, .3, 1.15) forwards;
     }
 
@@ -192,6 +166,7 @@
       color: #785b2c;
       font-family: system-ui, sans-serif;
       font-size: clamp(1rem, 4vw, 1.25rem);
+      font-weight: 700;
     }
 
     .open-button {
@@ -211,15 +186,6 @@
     .open-button:hover {
       transform: translateY(-3px);
       box-shadow: 0 16px 34px rgba(156, 98, 20, 0.32);
-    }
-
-    .open-button:focus-visible,
-    .envelope-box:focus-visible,
-    .mini-letter:focus-visible,
-    .cake:focus-visible,
-    .floating-music-btn:focus-visible {
-      outline: 4px solid var(--ink);
-      outline-offset: 5px;
     }
 
     .open-button.opened {
@@ -263,7 +229,7 @@
     }
 
     /* =======================================================
-       PHẦN 8 ẢNH KỶ NIỆM: HIỂN THỊ SẴN 4 ẢNH 1 TRANG POLAROID
+       2. PHẦN 8 ẢNH KỶ NIỆM: KHUNG POLAROID ÔM TRỌN 100% ẢNH GỐC
        ======================================================= */
     .memories {
       position: relative;
@@ -280,15 +246,14 @@
     }
 
     .memory-page {
-      max-width: 840px;
-      min-height: 85vh;
+      max-width: 880px;
       margin: 0 auto 64px;
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 28px;
+      gap: 32px;
       align-items: center;
       justify-items: center;
-      padding: 36px 16px;
+      padding: 28px 16px;
     }
 
     .memory-page:last-child {
@@ -298,7 +263,9 @@
     .photo {
       position: relative;
       margin: 0;
-      padding: 12px 12px 36px;
+      width: min(355px, 95%);
+      height: auto;
+      padding: 12px 12px 34px;
       background: #ffffff;
       border: 1px solid #f0e4c3;
       border-radius: 4px;
@@ -308,77 +275,15 @@
       transition: transform 280ms cubic-bezier(.2, .8, .2, 1), box-shadow 280ms ease;
     }
 
-    .memory-page:nth-of-type(1) .photo:nth-child(1) {
-      width: min(325px, 92%);
-      aspect-ratio: 4 / 4.6;
-      --tilt: -5deg;
-      --tx: 18px;
-      --ty: 12px;
-      z-index: 2;
-    }
+    .memory-page:nth-of-type(1) .photo:nth-child(1) { --tilt: -4deg; --tx: 12px; --ty: 8px; z-index: 2; }
+    .memory-page:nth-of-type(1) .photo:nth-child(2) { --tilt: 5deg; --tx: -12px; --ty: -8px; z-index: 1; }
+    .memory-page:nth-of-type(1) .photo:nth-child(3) { --tilt: 3.5deg; --tx: 14px; --ty: -10px; z-index: 1; }
+    .memory-page:nth-of-type(1) .photo:nth-child(4) { --tilt: -3.5deg; --tx: -10px; --ty: 8px; z-index: 3; }
 
-    .memory-page:nth-of-type(1) .photo:nth-child(2) {
-      width: min(295px, 88%);
-      aspect-ratio: 4 / 4.3;
-      --tilt: 6deg;
-      --tx: -20px;
-      --ty: -14px;
-      z-index: 1;
-    }
-
-    .memory-page:nth-of-type(1) .photo:nth-child(3) {
-      width: min(290px, 88%);
-      aspect-ratio: 4 / 4.4;
-      --tilt: 4deg;
-      --tx: 22px;
-      --ty: -18px;
-      z-index: 1;
-    }
-
-    .memory-page:nth-of-type(1) .photo:nth-child(4) {
-      width: min(335px, 94%);
-      aspect-ratio: 4 / 4.7;
-      --tilt: -4deg;
-      --tx: -16px;
-      --ty: 10px;
-      z-index: 3;
-    }
-
-    .memory-page:nth-of-type(2) .photo:nth-child(1) {
-      width: min(295px, 88%);
-      aspect-ratio: 4 / 4.3;
-      --tilt: 5deg;
-      --tx: 20px;
-      --ty: 14px;
-      z-index: 1;
-    }
-
-    .memory-page:nth-of-type(2) .photo:nth-child(2) {
-      width: min(330px, 93%);
-      aspect-ratio: 4 / 4.7;
-      --tilt: -6deg;
-      --tx: -18px;
-      --ty: -10px;
-      z-index: 3;
-    }
-
-    .memory-page:nth-of-type(2) .photo:nth-child(3) {
-      width: min(325px, 92%);
-      aspect-ratio: 4 / 4.6;
-      --tilt: -4deg;
-      --tx: 16px;
-      --ty: -16px;
-      z-index: 2;
-    }
-
-    .memory-page:nth-of-type(2) .photo:nth-child(4) {
-      width: min(295px, 88%);
-      aspect-ratio: 4 / 4.4;
-      --tilt: 6deg;
-      --tx: -20px;
-      --ty: 12px;
-      z-index: 1;
-    }
+    .memory-page:nth-of-type(2) .photo:nth-child(1) { --tilt: 4deg; --tx: 12px; --ty: 8px; z-index: 1; }
+    .memory-page:nth-of-type(2) .photo:nth-child(2) { --tilt: -5deg; --tx: -12px; --ty: -8px; z-index: 3; }
+    .memory-page:nth-of-type(2) .photo:nth-child(3) { --tilt: -3.5deg; --tx: 10px; --ty: -10px; z-index: 2; }
+    .memory-page:nth-of-type(2) .photo:nth-child(4) { --tilt: 5deg; --tx: -12px; --ty: 8px; z-index: 1; }
 
     .photo:hover {
       transform: translate(var(--tx, 0px), var(--ty, 0px)) scale(1.05) rotate(0deg);
@@ -428,7 +333,7 @@
     .photo-frame {
       position: relative;
       width: 100%;
-      height: 100%;
+      height: auto;
       overflow: hidden;
       border-radius: 2px;
       background: #fdf6df;
@@ -436,13 +341,12 @@
 
     .photo-frame img {
       width: 100%;
-      height: 100%;
+      height: auto;
       display: block;
-      object-fit: cover;
     }
 
     /* =======================================================
-       PHẦN BÁNH KEM (NẰM NGAY SAU ẢNH KỶ NIỆM)
+       3. PHẦN THỔI BÁNH KEM
        ======================================================= */
     .cake-section {
       min-height: 660px;
@@ -508,11 +412,7 @@
       position: relative;
       width: 18px;
       height: 72px;
-      background: repeating-linear-gradient(
-        135deg,
-        #fff 0 8px,
-        #f2b84b 8px 16px
-      );
+      background: repeating-linear-gradient(135deg, #fff 0 8px, #f2b84b 8px 16px);
       border-radius: 5px 5px 2px 2px;
     }
 
@@ -557,7 +457,7 @@
     }
 
     /* =======================================================
-       PHẦN PHONG BÌ THƯ (NẰM DƯỚI SAU PHẦN BÁNH KEM)
+       4. PHẦN PHONG BÌ 2 LÁ THƯ LỜI CHÚC (NẰM DƯỚI BÁNH KEM)
        ======================================================= */
     .collage-section {
       background: linear-gradient(135deg, #fff9db, #fff0b8);
@@ -664,13 +564,8 @@
       transition: transform 700ms cubic-bezier(.2, .85, .3, 1.15), opacity 400ms ease, box-shadow 220ms ease;
     }
 
-    .mini-letter-left {
-      left: 4%;
-    }
-
-    .mini-letter-right {
-      right: 4%;
-    }
+    .mini-letter-left { left: 4%; }
+    .mini-letter-right { right: 4%; }
 
     .envelope-stage.open .mini-letter {
       opacity: 1;
@@ -829,7 +724,7 @@
     }
 
     /* =======================================================
-       PHẦN CUỐI CÙNG: BĂNG RÔN CHỮ CHẠY + ĐỘI HÌNH USAGI CHÚC MỪNG
+       5. PHẦN KẾT CUỐI CÙNG: BĂNG RÔN CHỮ CHẠY + ĐỘI HÌNH USAGI
        ======================================================= */
     .finale-section {
       padding: 70px 0 100px;
@@ -936,16 +831,8 @@
     }
 
     @keyframes titleReveal {
-      0% {
-        opacity: 0;
-        transform: scale(0.6) rotate(-5deg);
-        filter: blur(10px);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1) rotate(0);
-        filter: blur(0);
-      }
+      0% { opacity: 0; transform: scale(0.6) rotate(-5deg); filter: blur(10px); }
+      100% { opacity: 1; transform: scale(1) rotate(0); filter: blur(0); }
     }
 
     @keyframes floatDown {
@@ -958,101 +845,35 @@
     }
 
     @keyframes smoke {
-      to {
-        opacity: 0;
-        transform: translate(-50%, -55px) scale(1.8);
-      }
+      to { opacity: 0; transform: translate(-50%, -55px) scale(1.8); }
     }
 
     @media (max-width: 700px) {
-      section {
-        padding: 70px 18px;
-      }
-
-      .corner-photo {
-        width: 96px;
-        padding: 5px 5px 12px;
-      }
-
+      section { padding: 70px 18px; }
+      .corner-photo { width: 92px; padding: 5px 5px 12px; }
       .corner-tl { top: 18px; left: 14px; }
       .corner-tr { top: 18px; right: 14px; }
       .corner-bl { bottom: 20px; left: 14px; }
       .corner-br { bottom: 20px; right: 14px; }
 
-      .memory-page {
-        min-height: 62vh;
-        gap: 12px;
-        padding: 20px 4px;
-        margin-bottom: 40px;
-      }
+      .memory-page { gap: 14px; padding: 16px 4px; margin-bottom: 36px; }
+      .photo { width: 96%; padding: 7px 7px 20px; }
+      .memory-page:nth-of-type(n) .photo:nth-child(1) { --tx: 4px; --ty: 3px; }
+      .memory-page:nth-of-type(n) .photo:nth-child(2) { --tx: -4px; --ty: -3px; }
+      .memory-page:nth-of-type(n) .photo:nth-child(3) { --tx: 4px; --ty: -4px; }
+      .memory-page:nth-of-type(n) .photo:nth-child(4) { --tx: -4px; --ty: 3px; }
+      .photo::before { width: 56px; height: 16px; top: -9px; }
 
-      .photo {
-        padding: 7px 7px 22px;
-      }
-
-      .memory-page:nth-of-type(n) .photo:nth-child(1) { width: 96%; --tx: 6px; --ty: 4px; }
-      .memory-page:nth-of-type(n) .photo:nth-child(2) { width: 92%; --tx: -6px; --ty: -4px; }
-      .memory-page:nth-of-type(n) .photo:nth-child(3) { width: 92%; --tx: 6px; --ty: -6px; }
-      .memory-page:nth-of-type(n) .photo:nth-child(4) { width: 97%; --tx: -5px; --ty: 4px; }
-
-      .photo::before {
-        width: 56px;
-        height: 16px;
-        top: -9px;
-      }
-
-      .envelope-stage {
-        height: 290px;
-        margin-top: 110px;
-      }
-
-      .mini-letter {
-        width: 48%;
-        height: 210px;
-        padding: 14px 12px;
-      }
-
-      .envelope-stage.open .mini-letter-left {
-        transform: translateY(-115px) rotate(-6deg);
-      }
-
-      .envelope-stage.open .mini-letter-right {
-        transform: translateY(-122px) rotate(6deg);
-      }
-
-      .usagi-squad {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 14px;
-      }
-
-      .cake {
-        height: 230px;
-      }
-
-      .floating-music-btn {
-        right: 14px;
-        bottom: 14px;
-        padding: 10px 14px;
-        font-size: 0.82rem;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
-      *,
-      *::before,
-      *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
+      .envelope-stage { height: 290px; margin-top: 110px; }
+      .mini-letter { width: 48%; height: 210px; padding: 14px 12px; }
+      .envelope-stage.open .mini-letter-left { transform: translateY(-115px) rotate(-6deg); }
+      .envelope-stage.open .mini-letter-right { transform: translateY(-122px) rotate(6deg); }
+      .usagi-squad { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+      .cake { height: 230px; }
+      .floating-music-btn { right: 14px; bottom: 14px; padding: 10px 14px; font-size: 0.82rem; }
     }
   </style>
 </head>
-
 <body>
   <canvas id="confettiCanvas" aria-hidden="true"></canvas>
 
@@ -1061,48 +882,33 @@
     🎵 Bật nhạc nền
   </button>
 
+  <!-- 1. TRANG MỞ ĐẦU -->
   <header class="opening" id="opening">
-    <!-- 4 ảnh bung ra 4 góc khi bấm nút -->
     <div class="corner-photos" id="cornerPhotos" aria-hidden="true">
       <figure class="corner-photo corner-tl">
-        <img src="tien-1.jpg" alt="Cát Tiên 1"
-             onerror="this.src='https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=500'" />
+        <img src="tien-1.jpg" alt="Cát Tiên 1" onerror="this.src='https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=500'" />
       </figure>
       <figure class="corner-photo corner-tr">
-        <img src="tien-2.jpg" alt="Cát Tiên 2"
-             onerror="this.src='https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=500'" />
+        <img src="tien-2.jpg" alt="Cát Tiên 2" onerror="this.src='https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=500'" />
       </figure>
       <figure class="corner-photo corner-bl">
-        <img src="tien-3.jpg" alt="Cát Tiên 3"
-             onerror="this.src='https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=500'" />
+        <img src="tien-3.jpg" alt="Cát Tiên 3" onerror="this.src='https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=500'" />
       </figure>
       <figure class="corner-photo corner-br">
-        <img src="tien-4.jpg" alt="Cát Tiên 4"
-             onerror="this.src='https://images.unsplash.com/photo-1506869640319-fe1a24fd76dc?w=500'" />
+        <img src="tien-4.jpg" alt="Cát Tiên 4" onerror="this.src='https://images.unsplash.com/photo-1506869640319-fe1a24fd76dc?w=500'" />
       </figure>
     </div>
 
     <div class="opening-card">
-      <h1 class="revealed-title" id="birthdayTitle">
-        Happy 18th Birthday!
-      </h1>
-
-      <p class="opening-subtitle" id="openingSubtitle">
-        GUESS WHO JUST TURNED 18?
-      </p>
-
-      <button class="open-button" id="openButton" type="button">
-        Tap for your surprise
-      </button>
-
-      <div class="scroll-note" id="scrollNote">
-        Scroll down for the memories ↓
-      </div>
+      <h1 class="revealed-title" id="birthdayTitle">Happy 18th Birthday!</h1>
+      <p class="opening-subtitle" id="openingSubtitle">GUESS WHO JUST TURNED 18?</p>
+      <button class="open-button" id="openButton" type="button">Tap for your surprise</button>
+      <div class="scroll-note" id="scrollNote">Scroll down for the memories ↓</div>
     </div>
   </header>
 
   <main>
-    <!-- 1. PHẦN 8 ẢNH KỶ NIỆM: HIỂN THỊ SẴN 4 ẢNH 1 TRANG POLAROID -->
+    <!-- 2. PHẦN 8 ẢNH KỶ NIỆM (HIỂN THỊ TRỌN VẸN KHÔNG CẮT MẶT) -->
     <section class="memories" id="memories">
       <div class="section-inner">
         <h2 class="section-heading">Our Favourite Moments</h2>
@@ -1111,87 +917,71 @@
           grateful to have you in my life.
         </p>
 
-        <!-- TRANG 1: memory-1.jpg -> memory-4.jpg -->
         <div class="memory-page">
           <figure class="photo">
             <span class="photo-deco deco-tl" aria-hidden="true">✨</span>
             <span class="photo-deco deco-br" aria-hidden="true">🎊</span>
             <div class="photo-frame">
-              <img src="memory-1.jpg" alt="Memory 1"
-                   onerror="this.src='https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=700'" />
+              <img src="memory-1.jpg" alt="Memory 1" onerror="this.src='https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=700'" />
             </div>
           </figure>
-
           <figure class="photo">
             <span class="photo-deco deco-tr" aria-hidden="true">💛</span>
             <span class="photo-deco deco-bl" aria-hidden="true">🎉</span>
             <div class="photo-frame">
-              <img src="memory-2.jpg" alt="Memory 2"
-                   onerror="this.src='https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=700'" />
+              <img src="memory-2.jpg" alt="Memory 2" onerror="this.src='https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=700'" />
             </div>
           </figure>
-
           <figure class="photo">
             <span class="photo-deco deco-tl" aria-hidden="true">🌟</span>
             <span class="photo-deco deco-br" aria-hidden="true">🎈</span>
             <div class="photo-frame">
-              <img src="memory-3.jpg" alt="Memory 3"
-                   onerror="this.src='https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=700'" />
+              <img src="memory-3.jpg" alt="Memory 3" onerror="this.src='https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=700'" />
             </div>
           </figure>
-
           <figure class="photo">
             <span class="photo-deco deco-tr" aria-hidden="true">✨</span>
             <span class="photo-deco deco-bl" aria-hidden="true">🧡</span>
             <div class="photo-frame">
-              <img src="memory-4.jpg" alt="Memory 4"
-                   onerror="this.src='https://images.unsplash.com/photo-1506869640319-fe1a24fd76dc?w=700'" />
+              <img src="memory-4.jpg" alt="Memory 4" onerror="this.src='https://images.unsplash.com/photo-1506869640319-fe1a24fd76dc?w=700'" />
             </div>
           </figure>
         </div>
 
-        <!-- TRANG 2: memory-5.jpg -> memory-8.jpg -->
         <div class="memory-page">
           <figure class="photo">
             <span class="photo-deco deco-tl" aria-hidden="true">🎉</span>
             <span class="photo-deco deco-br" aria-hidden="true">✨</span>
             <div class="photo-frame">
-              <img src="memory-5.jpg" alt="Memory 5"
-                   onerror="this.src='https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=700'" />
+              <img src="memory-5.jpg" alt="Memory 5" onerror="this.src='https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=700'" />
             </div>
           </figure>
-
           <figure class="photo">
             <span class="photo-deco deco-tr" aria-hidden="true">🌟</span>
             <span class="photo-deco deco-bl" aria-hidden="true">💛</span>
             <div class="photo-frame">
-              <img src="memory-6.jpg" alt="Memory 6"
-                   onerror="this.src='https://images.unsplash.com/photo-1523301343968-6a6ebf63c672?w=700'" />
+              <img src="memory-6.jpg" alt="Memory 6" onerror="this.src='https://images.unsplash.com/photo-1523301343968-6a6ebf63c672?w=700'" />
             </div>
           </figure>
-
           <figure class="photo">
             <span class="photo-deco deco-tl" aria-hidden="true">🎈</span>
             <span class="photo-deco deco-br" aria-hidden="true">🎊</span>
             <div class="photo-frame">
-              <img src="memory-7.jpg" alt="Memory 7"
-                   onerror="this.src='https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=700'" />
+              <img src="memory-7.jpg" alt="Memory 7" onerror="this.src='https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=700'" />
             </div>
           </figure>
-
           <figure class="photo">
             <span class="photo-deco deco-tr" aria-hidden="true">🧡</span>
             <span class="photo-deco deco-bl" aria-hidden="true">✨</span>
             <div class="photo-frame">
-              <img src="memory-8.jpg" alt="Memory 8"
-                   onerror="this.src='https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=700'" />
+              <img src="memory-8.jpg" alt="Memory 8" onerror="this.src='https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=700'" />
             </div>
           </figure>
         </div>
       </div>
     </section>
 
-    <!-- 2. PHẦN THỔI BÁNH KEM -->
+    <!-- 3. PHẦN THỔI BÁNH KEM -->
     <section class="cake-section">
       <div class="section-inner">
         <h2 class="section-heading">Make a Birthday Wish</h2>
@@ -1200,11 +990,9 @@
         </p>
 
         <div class="cake-wrap">
-          <button class="cake" id="cake" type="button"
-                  aria-label="Blow out the birthday candles">
+          <button class="cake" id="cake" type="button" aria-label="Blow out the birthday candles">
             <span class="cake-stand"></span>
             <span class="cake-base"></span>
-
             <span class="candles" aria-hidden="true">
               <span class="candle"><span class="flame"></span></span>
               <span class="candle"><span class="flame"></span></span>
@@ -1221,7 +1009,7 @@
       </div>
     </section>
 
-    <!-- 3. PHẦN PHONG BÌ 2 LÁ THƯ LỜI CHÚC (NẰM DƯỚI SAU PHẦN BÁNH KEM) -->
+    <!-- 4. PHẦN PHONG BÌ 2 LÁ THƯ LỜI CHÚC -->
     <section class="collage-section">
       <div class="section-inner">
         <h2 class="section-heading">Letters for You</h2>
@@ -1259,7 +1047,7 @@
       </div>
     </section>
 
-    <!-- 4. PHẦN KẾT CUỐI CÙNG: BĂNG RÔN CHỮ CHẠY + ĐỘI HÌNH USAGI CHÚC MỪNG -->
+    <!-- 5. PHẦN KẾT CUỐI CÙNG: BĂNG RÔN CHỮ CHẠY + ĐỘI HÌNH USAGI -->
     <section class="finale-section">
       <div class="banner-marquee" aria-label="Happy Birthday, wish you sweet 18">
         <div class="marquee-track">
@@ -1275,26 +1063,18 @@
       <div class="usagi-stage">
         <div class="usagi-squad">
           <div class="usagi-card">
-            <img src="usagi-1.gif" alt="Usagi cheering 1"
-                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Crect width=%22200%22 height=%22200%22 rx=%2224%22 fill=%22%23fff9db%22/%3E%3Cellipse cx=%2282%22 cy=%2246%22 rx=%2211%22 ry=%2234%22 transform=%22rotate(-8 82 46)%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Cellipse cx=%22118%22 cy=%2246%22 rx=%2211%22 ry=%2234%22 transform=%22rotate(8 118 46)%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Ccircle cx=%22100%22 cy=%22112%22 r=%2254%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Ccircle cx=%2282%22 cy=%22104%22 r=%225%22 fill=%22%234a3d24%22/%3E%3Ccircle cx=%22118%22 cy=%22104%22 r=%225%22 fill=%22%234a3d24%22/%3E%3Cellipse cx=%2268%22 cy=%22116%22 rx=%2210%22 ry=%226%22 fill=%22%23ffb3ba%22/%3E%3Cellipse cx=%22132%22 cy=%22116%22 rx=%2210%22 ry=%226%22 fill=%22%23ffb3ba%22/%3E%3Cpath d=%22M92 118 Q100 132 108 118 Z%22 fill=%22%23ff8fa3%22 stroke=%22%234a3d24%22 stroke-width=%223%22/%3E%3Ctext x=%22100%22 y=%22188%22 font-size=%2213%22 font-family=%22sans-serif%22 fill=%22%239c6214%22 text-anchor=%22middle%22%3Eusagi-1.gif%3C/text%3E%3C/svg%3E'" />
+            <img src="usagi-1.gif" alt="Usagi cheering 1" onerror="this.src='https://placehold.co/200x200/fff9db/9c6214?text=usagi-1.gif'" />
           </div>
-
           <div class="usagi-card">
-            <img src="usagi-2.gif" alt="Usagi cheering 2"
-                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Crect width=%22200%22 height=%22200%22 rx=%2224%22 fill=%22%23fff9db%22/%3E%3Cellipse cx=%2282%22 cy=%2246%22 rx=%2211%22 ry=%2234%22 transform=%22rotate(-8 82 46)%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Cellipse cx=%22118%22 cy=%2246%22 rx=%2211%22 ry=%2234%22 transform=%22rotate(8 118 46)%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Ccircle cx=%22100%22 cy=%22112%22 r=%2254%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Ccircle cx=%2282%22 cy=%22104%22 r=%225%22 fill=%22%234a3d24%22/%3E%3Ccircle cx=%22118%22 cy=%22104%22 r=%225%22 fill=%22%234a3d24%22/%3E%3Cellipse cx=%2268%22 cy=%22116%22 rx=%2210%22 ry=%226%22 fill=%22%23ffb3ba%22/%3E%3Cellipse cx=%22132%22 cy=%22116%22 rx=%2210%22 ry=%226%22 fill=%22%23ffb3ba%22/%3E%3Cpath d=%22M92 118 Q100 132 108 118 Z%22 fill=%22%23ff8fa3%22 stroke=%22%234a3d24%22 stroke-width=%223%22/%3E%3Ctext x=%22100%22 y=%22188%22 font-size=%2213%22 font-family=%22sans-serif%22 fill=%22%239c6214%22 text-anchor=%22middle%22%3Eusagi-2.gif%3C/text%3E%3C/svg%3E'" />
+            <img src="usagi-2.gif" alt="Usagi cheering 2" onerror="this.src='https://placehold.co/200x200/fff9db/9c6214?text=usagi-2.gif'" />
           </div>
-
           <div class="usagi-card">
-            <img src="usagi-3.gif" alt="Usagi cheering 3"
-                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Crect width=%22200%22 height=%22200%22 rx=%2224%22 fill=%22%23fff9db%22/%3E%3Cellipse cx=%2282%22 cy=%2246%22 rx=%2211%22 ry=%2234%22 transform=%22rotate(-8 82 46)%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Cellipse cx=%22118%22 cy=%2246%22 rx=%2211%22 ry=%2234%22 transform=%22rotate(8 118 46)%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Ccircle cx=%22100%22 cy=%22112%22 r=%2254%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Ccircle cx=%2282%22 cy=%22104%22 r=%225%22 fill=%22%234a3d24%22/%3E%3Ccircle cx=%22118%22 cy=%22104%22 r=%225%22 fill=%22%234a3d24%22/%3E%3Cellipse cx=%2268%22 cy=%22116%22 rx=%2210%22 ry=%226%22 fill=%22%23ffb3ba%22/%3E%3Cellipse cx=%22132%22 cy=%22116%22 rx=%2210%22 ry=%226%22 fill=%22%23ffb3ba%22/%3E%3Cpath d=%22M92 118 Q100 132 108 118 Z%22 fill=%22%23ff8fa3%22 stroke=%22%234a3d24%22 stroke-width=%223%22/%3E%3Ctext x=%22100%22 y=%22188%22 font-size=%2213%22 font-family=%22sans-serif%22 fill=%22%239c6214%22 text-anchor=%22middle%22%3Eusagi-3.gif%3C/text%3E%3C/svg%3E'" />
+            <img src="usagi-3.gif" alt="Usagi cheering 3" onerror="this.src='https://placehold.co/200x200/fff9db/9c6214?text=usagi-3.gif'" />
           </div>
-
           <div class="usagi-card">
-            <img src="usagi-4.gif" alt="Usagi cheering 4"
-                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Crect width=%22200%22 height=%22200%22 rx=%2224%22 fill=%22%23fff9db%22/%3E%3Cellipse cx=%2282%22 cy=%2246%22 rx=%2211%22 ry=%2234%22 transform=%22rotate(-8 82 46)%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Cellipse cx=%22118%22 cy=%2246%22 rx=%2211%22 ry=%2234%22 transform=%22rotate(8 118 46)%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Ccircle cx=%22100%22 cy=%22112%22 r=%2254%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Ccircle cx=%2282%22 cy=%22104%22 r=%225%22 fill=%22%234a3d24%22/%3E%3Ccircle cx=%22118%22 cy=%22104%22 r=%225%22 fill=%22%234a3d24%22/%3E%3Cellipse cx=%2268%22 cy=%22116%22 rx=%2210%22 ry=%226%22 fill=%22%23ffb3ba%22/%3E%3Cellipse cx=%22132%22 cy=%22116%22 rx=%2210%22 ry=%226%22 fill=%22%23ffb3ba%22/%3E%3Cpath d=%22M92 118 Q100 132 108 118 Z%22 fill=%22%23ff8fa3%22 stroke=%22%234a3d24%22 stroke-width=%223%22/%3E%3Ctext x=%22100%22 y=%22188%22 font-size=%2213%22 font-family=%22sans-serif%22 fill=%22%239c6214%22 text-anchor=%22middle%22%3Eusagi-4.gif%3C/text%3E%3C/svg%3E'" />
+            <img src="usagi-4.gif" alt="Usagi cheering 4" onerror="this.src='https://placehold.co/200x200/fff9db/9c6214?text=usagi-4.gif'" />
           </div>
         </div>
-
         <p class="finale-sign">Una! Yaha! Happy 18th Birthday Cát Tiên ♥</p>
       </div>
     </section>
@@ -1330,17 +1110,8 @@
     }
 
     function createConfetti(amount = 160) {
-      const colors = [
-        "#ffd166",
-        "#f2be4c",
-        "#ffe89e",
-        "#e6a82e",
-        "#fff3b8",
-        "#ffffff"
-      ];
-
+      const colors = ["#ffd166", "#f2be4c", "#ffe89e", "#e6a82e", "#fff3b8", "#ffffff"];
       pieces = [];
-
       for (let i = 0; i < amount; i++) {
         pieces.push({
           x: Math.random() * window.innerWidth,
@@ -1358,27 +1129,19 @@
 
     function drawConfetti() {
       context.clearRect(0, 0, window.innerWidth, window.innerHeight);
-
       for (const piece of pieces) {
         context.save();
         context.translate(piece.x, piece.y);
         context.rotate(piece.rotation);
         context.fillStyle = piece.color;
-        context.fillRect(
-          -piece.width / 2,
-          -piece.height / 2,
-          piece.width,
-          piece.height
-        );
+        context.fillRect(-piece.width / 2, -piece.height / 2, piece.width, piece.height);
         context.restore();
 
         piece.y += piece.speed;
         piece.x += piece.drift;
         piece.rotation += piece.spin;
       }
-
       pieces = pieces.filter(piece => piece.y < window.innerHeight + 30);
-
       if (pieces.length) {
         confettiFrame = requestAnimationFrame(drawConfetti);
       } else {
@@ -1387,10 +1150,6 @@
     }
 
     function launchConfetti(amount) {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        return;
-      }
-
       cancelAnimationFrame(confettiFrame);
       createConfetti(amount);
       drawConfetti();
@@ -1399,6 +1158,7 @@
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
+    // Bấm nút Tap ở trang đầu mới hiện Happy 18th Birthday + 4 ảnh góc + pháo giấy
     openButton.addEventListener("click", () => {
       birthdayTitle.classList.add("show");
       cornerPhotos.classList.add("show");
@@ -1409,9 +1169,7 @@
       launchConfetti(190);
     });
 
-    // =======================================================
-    // NÚT NHẠC NỀN HAPPY BIRTHDAY TỰ ĐỘNG PHÁT & TỰ REPLAY
-    // =======================================================
+    // Nút nhạc nền tự phát & tự lặp lại
     const bgMusicBtn = document.getElementById("bgMusicBtn");
     let audioCtx = null;
     let isMusicOn = false;
@@ -1432,16 +1190,11 @@
 
     function scheduleBirthdayLoop() {
       if (!isMusicOn) return;
-
       const AudioContext = window.AudioContext || window.webkitAudioContext;
       if (!AudioContext) return;
 
-      if (!audioCtx) {
-        audioCtx = new AudioContext();
-      }
-      if (audioCtx.state === "suspended") {
-        audioCtx.resume();
-      }
+      if (!audioCtx) audioCtx = new AudioContext();
+      if (audioCtx.state === "suspended") audioCtx.resume();
 
       const notes = [
         [261.63, 0.35], [261.63, 0.25], [293.66, 0.6], [261.63, 0.6], [349.23, 0.6], [329.63, 1.1],
@@ -1468,15 +1221,12 @@
         osc.start(time);
         osc.stop(time + dur + 0.02);
         activeOscillators.push(osc);
-
         time += dur + 0.06;
       });
 
       const loopDurationMs = (time - audioCtx.currentTime + 0.8) * 1000;
       loopTimer = setTimeout(() => {
-        if (isMusicOn) {
-          scheduleBirthdayLoop();
-        }
+        if (isMusicOn) scheduleBirthdayLoop();
       }, loopDurationMs);
     }
 
@@ -1492,30 +1242,22 @@
       }
     });
 
-    // =======================================================
-    // THỔI BÁNH KEM
-    // =======================================================
+    // Thổi bánh kem
     const cake = document.getElementById("cake");
     const cakeMessage = document.getElementById("cakeMessage");
 
     cake.addEventListener("click", () => {
-      if (cake.classList.contains("blown")) {
-        return;
-      }
-
+      if (cake.classList.contains("blown")) return;
       cake.classList.add("blown");
       cake.setAttribute("aria-label", "The birthday candles are blown out");
       cakeMessage.textContent = "Your wish is on its way! Make sure it comes true ✨";
       launchConfetti(180);
-
       setTimeout(() => {
         cakeMessage.textContent = "One more wish for one more amazing year 🎂";
       }, 3500);
     });
 
-    // =======================================================
-    // XỬ LÝ PHONG BÌ -> HIỆN 2 THƯ NGHIÊNG -> BẤM ĐỌC TỪNG THƯ
-    // =======================================================
+    // Phong bì 2 lá thư
     const envelopeStage = document.getElementById("envelopeStage");
     const envelopeBtn = document.getElementById("envelopeBtn");
     const envelopeLabel = document.getElementById("envelopeLabel");
@@ -1524,7 +1266,7 @@
     const modalTitle = document.getElementById("modalTitle");
     const modalBody = document.getElementById("modalBody");
 
-    // NỘI DUNG 2 BỨC THƯ (Sửa lời chúc của bạn & bạn thân ở đây!)
+    // SỬA LỜI CHÚC CỦA BẠN & BẠN THÂN Ở ĐÂY:
     const lettersData = {
       letter1: {
         title: "From me",
@@ -1547,19 +1289,13 @@
     envelopeBtn.addEventListener("click", () => {
       const isOpen = envelopeStage.classList.toggle("open");
       envelopeBtn.setAttribute("aria-expanded", String(isOpen));
-      envelopeLabel.textContent = isOpen
-        ? "Tap on each letter to read it!"
-        : "Tap the wax seal to open the envelope";
-
-      if (isOpen) {
-        launchConfetti(70);
-      }
+      envelopeLabel.textContent = isOpen ? "Tap on each letter to read it!" : "Tap the wax seal to open the envelope";
+      if (isOpen) launchConfetti(70);
     });
 
     document.querySelectorAll(".mini-letter").forEach((btn) => {
       btn.addEventListener("click", () => {
-        const key = btn.getAttribute("data-letter");
-        const data = lettersData[key];
+        const data = lettersData[btn.getAttribute("data-letter")];
         if (!data) return;
         modalTitle.textContent = data.title;
         modalBody.innerHTML = data.html;
@@ -1567,14 +1303,9 @@
       });
     });
 
-    closeModalBtn.addEventListener("click", () => {
-      letterModal.classList.remove("show");
-    });
-
+    closeModalBtn.addEventListener("click", () => letterModal.classList.remove("show"));
     letterModal.addEventListener("click", (e) => {
-      if (e.target === letterModal) {
-        letterModal.classList.remove("show");
-      }
+      if (e.target === letterModal) letterModal.classList.remove("show");
     });
   </script>
 </body>
