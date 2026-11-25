@@ -236,44 +236,184 @@
       line-height: 1.7;
     }
 
-    /* Phần 8 ảnh kỷ niệm lật mở */
+    /* Phần 8 ảnh kỷ niệm: 4 ảnh 1 trang Polaroid, lướt xuống có 4 ảnh tiếp */
     .memories {
+      position: relative;
+      overflow: hidden;
       background:
+        radial-gradient(circle at 12% 18%, rgba(255, 224, 130, 0.45) 0 12px, transparent 13px),
+        radial-gradient(circle at 88% 15%, rgba(242, 190, 76, 0.35) 0 16px, transparent 17px),
+        radial-gradient(circle at 8% 50%, rgba(242, 190, 76, 0.3) 0 14px, transparent 15px),
+        radial-gradient(circle at 92% 55%, rgba(255, 224, 130, 0.5) 0 10px, transparent 11px),
+        radial-gradient(circle at 14% 85%, rgba(255, 224, 130, 0.45) 0 12px, transparent 13px),
+        radial-gradient(circle at 86% 88%, rgba(242, 190, 76, 0.35) 0 15px, transparent 16px),
         linear-gradient(rgba(255, 253, 244, 0.94), rgba(255, 253, 244, 0.94)),
         radial-gradient(circle at center, #ffe58f, transparent 70%);
     }
 
-    .photo-grid {
+    .memory-page {
+      max-width: 840px;
+      min-height: 85vh;
+      margin: 0 auto 64px;
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 22px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 28px;
+      align-items: center;
+      justify-items: center;
+      padding: 36px 16px;
     }
 
+    .memory-page:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Khung Polaroid nghệ thuật, ngả nghiêng & đè nhẹ lên nhau */
     .photo {
       position: relative;
       margin: 0;
-      padding: 0;
-      aspect-ratio: 3 / 4;
+      padding: 12px 12px 36px;
       background: #ffffff;
-      border: 8px solid #ffffff;
-      border-radius: 6px;
-      box-shadow: 0 14px 30px rgba(110, 88, 42, 0.14);
+      border: 1px solid #f0e4c3;
+      border-radius: 4px;
+      box-shadow: 0 18px 36px rgba(110, 88, 42, 0.16);
       cursor: pointer;
-      overflow: hidden;
-      transform: rotate(var(--tilt, 0deg));
-      transition: transform 250ms ease, box-shadow 250ms ease;
+      overflow: visible;
+      transform: translate(var(--tx, 0px), var(--ty, 0px)) rotate(var(--tilt, 0deg));
+      transition: transform 280ms cubic-bezier(.2, .8, .2, 1), box-shadow 280ms ease;
     }
 
-    .photo:nth-child(odd) { --tilt: -2deg; }
-    .photo:nth-child(even) { --tilt: 2deg; }
-
-    .photo:hover {
-      transform: scale(1.04) rotate(0deg);
-      box-shadow: 0 18px 36px rgba(110, 88, 42, 0.22);
+    /* Trang 1: 4 tấm kích thước xêm xêm, ngả nghiêng tự nhiên */
+    .memory-page:nth-of-type(1) .photo:nth-child(1) {
+      width: min(325px, 92%);
+      aspect-ratio: 4 / 4.6;
+      --tilt: -5deg;
+      --tx: 18px;
+      --ty: 12px;
       z-index: 2;
     }
 
-    .photo img {
+    .memory-page:nth-of-type(1) .photo:nth-child(2) {
+      width: min(295px, 88%);
+      aspect-ratio: 4 / 4.3;
+      --tilt: 6deg;
+      --tx: -20px;
+      --ty: -14px;
+      z-index: 1;
+    }
+
+    .memory-page:nth-of-type(1) .photo:nth-child(3) {
+      width: min(290px, 88%);
+      aspect-ratio: 4 / 4.4;
+      --tilt: 4deg;
+      --tx: 22px;
+      --ty: -18px;
+      z-index: 1;
+    }
+
+    .memory-page:nth-of-type(1) .photo:nth-child(4) {
+      width: min(335px, 94%);
+      aspect-ratio: 4 / 4.7;
+      --tilt: -4deg;
+      --tx: -16px;
+      --ty: 10px;
+      z-index: 3;
+    }
+
+    /* Trang 2: Đổi góc nghiêng và kích thước xêm xêm khác đi cho sinh động */
+    .memory-page:nth-of-type(2) .photo:nth-child(1) {
+      width: min(295px, 88%);
+      aspect-ratio: 4 / 4.3;
+      --tilt: 5deg;
+      --tx: 20px;
+      --ty: 14px;
+      z-index: 1;
+    }
+
+    .memory-page:nth-of-type(2) .photo:nth-child(2) {
+      width: min(330px, 93%);
+      aspect-ratio: 4 / 4.7;
+      --tilt: -6deg;
+      --tx: -18px;
+      --ty: -10px;
+      z-index: 3;
+    }
+
+    .memory-page:nth-of-type(2) .photo:nth-child(3) {
+      width: min(325px, 92%);
+      aspect-ratio: 4 / 4.6;
+      --tilt: -4deg;
+      --tx: 16px;
+      --ty: -16px;
+      z-index: 2;
+    }
+
+    .memory-page:nth-of-type(2) .photo:nth-child(4) {
+      width: min(295px, 88%);
+      aspect-ratio: 4 / 4.4;
+      --tilt: 6deg;
+      --tx: -20px;
+      --ty: 12px;
+      z-index: 1;
+    }
+
+    .photo:hover {
+      transform: translate(var(--tx, 0px), var(--ty, 0px)) scale(1.05) rotate(0deg);
+      box-shadow: 0 24px 46px rgba(110, 88, 42, 0.25);
+      z-index: 10 !important;
+    }
+
+    /* Miếng băng dính giấy (washi tape) dán trên đầu khung Polaroid */
+    .photo::before {
+      content: "";
+      position: absolute;
+      top: -13px;
+      left: 50%;
+      width: 84px;
+      height: 24px;
+      background: rgba(242, 190, 76, 0.55);
+      border-left: 2px dashed rgba(255, 255, 255, 0.7);
+      border-right: 2px dashed rgba(255, 255, 255, 0.7);
+      transform: translateX(-50%) rotate(-3deg);
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .photo:nth-child(even)::before {
+      background: rgba(255, 196, 168, 0.55);
+      transform: translateX(-50%) rotate(4deg);
+    }
+
+    /* Họa tiết confetti/sao/tim trang trí xung quanh khung ảnh */
+    .photo-deco {
+      position: absolute;
+      pointer-events: none;
+      font-size: 1.15rem;
+      z-index: 6;
+      filter: drop-shadow(0 2px 4px rgba(156, 98, 20, 0.18));
+      animation: twinkle 2.4s ease-in-out infinite alternate;
+    }
+
+    .deco-tl { top: -14px; left: -12px; transform: rotate(-15deg); }
+    .deco-tr { top: -12px; right: -14px; transform: rotate(18deg); animation-delay: 0.6s; }
+    .deco-bl { bottom: -12px; left: -14px; transform: rotate(12deg); animation-delay: 1.1s; }
+    .deco-br { bottom: -14px; right: -12px; transform: rotate(-18deg); animation-delay: 1.6s; }
+
+    @keyframes twinkle {
+      from { transform: scale(0.92) rotate(-8deg); }
+      to { transform: scale(1.12) rotate(8deg); }
+    }
+
+    /* Khung chứa ảnh bên trong viền Polaroid */
+    .photo-frame {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 2px;
+      background: #fdf6df;
+    }
+
+    .photo-frame img {
       width: 100%;
       height: 100%;
       display: block;
@@ -289,7 +429,10 @@
       display: grid;
       place-content: center;
       gap: 6px;
-      background: linear-gradient(135deg, #ffeaa3, #f7d36f);
+      background:
+        radial-gradient(circle at 20% 25%, rgba(255,255,255,0.6) 0 4px, transparent 5px),
+        radial-gradient(circle at 80% 75%, rgba(255,255,255,0.6) 0 5px, transparent 6px),
+        linear-gradient(135deg, #ffeaa3, #f7d36f);
       color: var(--pink-dark);
       font-family: system-ui, sans-serif;
       font-weight: 700;
@@ -299,10 +442,10 @@
     }
 
     .photo-cover span {
-      font-size: 1.6rem;
+      font-size: 1.7rem;
     }
 
-    .photo.revealed img {
+    .photo.revealed .photo-frame img {
       opacity: 1;
       transform: scale(1);
     }
@@ -598,14 +741,26 @@
       .corner-bl { bottom: 20px; left: 14px; }
       .corner-br { bottom: 20px; right: 14px; }
 
-      .photo-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 14px;
+      .memory-page {
+        min-height: 62vh;
+        gap: 12px;
+        padding: 20px 4px;
+        margin-bottom: 40px;
       }
 
       .photo {
-        width: 100%;
-        margin: 0 !important;
+        padding: 7px 7px 22px;
+      }
+
+      .memory-page:nth-of-type(n) .photo:nth-child(1) { width: 96%; --tx: 6px; --ty: 4px; }
+      .memory-page:nth-of-type(n) .photo:nth-child(2) { width: 92%; --tx: -6px; --ty: -4px; }
+      .memory-page:nth-of-type(n) .photo:nth-child(3) { width: 92%; --tx: 6px; --ty: -6px; }
+      .memory-page:nth-of-type(n) .photo:nth-child(4) { width: 97%; --tx: -5px; --ty: 4px; }
+
+      .photo::before {
+        width: 56px;
+        height: 16px;
+        top: -9px;
       }
 
       .letter-envelope {
@@ -680,7 +835,7 @@
       </h1>
 
       <p class="opening-subtitle" id="openingSubtitle">
-        Guess who just turned 18?.
+        GUESS WHO JUST TURNED 18?
       </p>
 
       <button class="open-button" id="openButton" type="button">
@@ -698,56 +853,93 @@
       <div class="section-inner">
         <h2 class="section-heading">Our Favourite Moments</h2>
         <p class="section-description">
-          Kỉ niệm hơn 3 năm qua tụi mìn có nhau!
+          A few memories, lots of laughter, and every little moment that makes me
+          grateful to have you in my life. Tap each frame to reveal a memory!
         </p>
 
-        <div class="photo-grid">
+        <!-- TRANG 1: 4 ẢNH ĐẦU TIÊN (memory-1.jpg -> memory-4.jpg) -->
+        <div class="memory-page">
           <button class="photo" type="button" aria-label="Reveal memory 1">
-            <img src="memory-1.jpg" alt="Memory 1"
-                 onerror="this.src='https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=700'" />
-            <div class="photo-cover"><span>✨</span>#1</div>
+            <span class="photo-deco deco-tl" aria-hidden="true">✨</span>
+            <span class="photo-deco deco-br" aria-hidden="true">🎊</span>
+            <div class="photo-frame">
+              <img src="memory-1.jpg" alt="Memory 1"
+                   onerror="this.src='https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=700'" />
+              <div class="photo-cover"><span>✨</span>#1</div>
+            </div>
           </button>
 
           <button class="photo" type="button" aria-label="Reveal memory 2">
-            <img src="memory-2.jpg" alt="Memory 2"
-                 onerror="this.src='https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=700'" />
-            <div class="photo-cover"><span>✨</span>#2</div>
+            <span class="photo-deco deco-tr" aria-hidden="true">💛</span>
+            <span class="photo-deco deco-bl" aria-hidden="true">🎉</span>
+            <div class="photo-frame">
+              <img src="memory-2.jpg" alt="Memory 2"
+                   onerror="this.src='https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=700'" />
+              <div class="photo-cover"><span>✨</span>#2</div>
+            </div>
           </button>
 
           <button class="photo" type="button" aria-label="Reveal memory 3">
-            <img src="memory-3.jpg" alt="Memory 3"
-                 onerror="this.src='https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=700'" />
-            <div class="photo-cover"><span>✨</span>#3</div>
+            <span class="photo-deco deco-tl" aria-hidden="true">🌟</span>
+            <span class="photo-deco deco-br" aria-hidden="true">🎈</span>
+            <div class="photo-frame">
+              <img src="memory-3.jpg" alt="Memory 3"
+                   onerror="this.src='https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=700'" />
+              <div class="photo-cover"><span>✨</span>#3</div>
+            </div>
           </button>
 
           <button class="photo" type="button" aria-label="Reveal memory 4">
-            <img src="memory-4.jpg" alt="Memory 4"
-                 onerror="this.src='https://images.unsplash.com/photo-1506869640319-fe1a24fd76dc?w=700'" />
-            <div class="photo-cover"><span>✨</span>#4</div>
+            <span class="photo-deco deco-tr" aria-hidden="true">✨</span>
+            <span class="photo-deco deco-bl" aria-hidden="true">🧡</span>
+            <div class="photo-frame">
+              <img src="memory-4.jpg" alt="Memory 4"
+                   onerror="this.src='https://images.unsplash.com/photo-1506869640319-fe1a24fd76dc?w=700'" />
+              <div class="photo-cover"><span>✨</span>#4</div>
+            </div>
           </button>
+        </div>
 
+        <!-- LƯỚT XUỐNG CÓ 4 ẢNH TIẾP THEO (memory-5.jpg -> memory-8.jpg) -->
+        <div class="memory-page">
           <button class="photo" type="button" aria-label="Reveal memory 5">
-            <img src="memory-5.jpg" alt="Memory 5"
-                 onerror="this.src='https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=700'" />
-            <div class="photo-cover"><span>✨</span>#5</div>
+            <span class="photo-deco deco-tl" aria-hidden="true">🎉</span>
+            <span class="photo-deco deco-br" aria-hidden="true">✨</span>
+            <div class="photo-frame">
+              <img src="memory-5.jpg" alt="Memory 5"
+                   onerror="this.src='https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=700'" />
+              <div class="photo-cover"><span>✨</span>#5</div>
+            </div>
           </button>
 
           <button class="photo" type="button" aria-label="Reveal memory 6">
-            <img src="memory-6.jpg" alt="Memory 6"
-                 onerror="this.src='https://images.unsplash.com/photo-1523301343968-6a6ebf63c672?w=700'" />
-            <div class="photo-cover"><span>✨</span>#6</div>
+            <span class="photo-deco deco-tr" aria-hidden="true">🌟</span>
+            <span class="photo-deco deco-bl" aria-hidden="true">💛</span>
+            <div class="photo-frame">
+              <img src="memory-6.jpg" alt="Memory 6"
+                   onerror="this.src='https://images.unsplash.com/photo-1523301343968-6a6ebf63c672?w=700'" />
+              <div class="photo-cover"><span>✨</span>#6</div>
+            </div>
           </button>
 
           <button class="photo" type="button" aria-label="Reveal memory 7">
-            <img src="memory-7.jpg" alt="Memory 7"
-                 onerror="this.src='https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=700'" />
-            <div class="photo-cover"><span>✨</span>#7</div>
+            <span class="photo-deco deco-tl" aria-hidden="true">🎈</span>
+            <span class="photo-deco deco-br" aria-hidden="true">🎊</span>
+            <div class="photo-frame">
+              <img src="memory-7.jpg" alt="Memory 7"
+                   onerror="this.src='https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=700'" />
+              <div class="photo-cover"><span>✨</span>#7</div>
+            </div>
           </button>
 
           <button class="photo" type="button" aria-label="Reveal memory 8">
-            <img src="memory-8.jpg" alt="Memory 8"
-                 onerror="this.src='https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=700'" />
-            <div class="photo-cover"><span>✨</span>#8</div>
+            <span class="photo-deco deco-tr" aria-hidden="true">🧡</span>
+            <span class="photo-deco deco-bl" aria-hidden="true">✨</span>
+            <div class="photo-frame">
+              <img src="memory-8.jpg" alt="Memory 8"
+                   onerror="this.src='https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=700'" />
+              <div class="photo-cover"><span>✨</span>#8</div>
+            </div>
           </button>
         </div>
       </div>
@@ -949,10 +1141,13 @@
       launchConfetti(190);
     });
 
-    // Bấm vào từng thẻ kỷ niệm để lật mở/úp ảnh
+    // Bấm vào từng khung Polaroid để lật mở/úp ảnh (kèm pháo giấy nhỏ khi mở)
     document.querySelectorAll(".photo").forEach((card) => {
       card.addEventListener("click", () => {
-        card.classList.toggle("revealed");
+        const revealed = card.classList.toggle("revealed");
+        if (revealed) {
+          launchConfetti(35);
+        }
       });
     });
 
