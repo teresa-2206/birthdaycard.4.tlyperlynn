@@ -34,6 +34,7 @@
       font: inherit;
     }
 
+    /* Nút bật/tắt nhạc nền tự lặp lại cố định ở góc dưới bên phải */
     .floating-music-btn {
       position: fixed;
       right: 20px;
@@ -60,6 +61,9 @@
       background: #7e9d87;
     }
 
+    /* =======================================================
+       1. TRANG MỞ ĐẦU: BẤM NÚT TAP MỚI BUNG CHỮ + 4 ẢNH GÓC
+       ======================================================= */
     .opening {
       position: relative;
       min-height: 100vh;
@@ -80,7 +84,6 @@
       width: min(540px, 100%);
     }
 
-    /* 4 ảnh ở 4 góc tự động hiện ngay khi vào trang */
     .corner-photos {
       position: absolute;
       inset: 0;
@@ -96,8 +99,8 @@
       background: #ffffff;
       border-radius: 6px;
       box-shadow: 0 16px 34px rgba(110, 88, 42, 0.18);
-      pointer-events: auto;
-      animation: cornerPop 750ms cubic-bezier(.2, .85, .3, 1.15) both;
+      opacity: 0;
+      pointer-events: none;
       transition: transform 250ms ease, box-shadow 250ms ease;
     }
 
@@ -110,13 +113,23 @@
       border-radius: 3px;
     }
 
-    .corner-tl { top: 5%; left: 4%; --tilt: -8deg; --start-x: -40px; --start-y: -40px; animation-delay: 100ms; }
-    .corner-tr { top: 5%; right: 4%; --tilt: 7deg; --start-x: 40px; --start-y: -40px; animation-delay: 200ms; }
-    .corner-bl { bottom: 6%; left: 5%; --tilt: 6deg; --start-x: -40px; --start-y: 40px; animation-delay: 300ms; }
-    .corner-br { bottom: 6%; right: 5%; --tilt: -7deg; --start-x: 40px; --start-y: 40px; animation-delay: 400ms; }
+    .corner-tl { top: 5%; left: 4%; --tilt: -8deg; --start-x: -40px; --start-y: -40px; }
+    .corner-tr { top: 5%; right: 4%; --tilt: 7deg; --start-x: 40px; --start-y: -40px; }
+    .corner-bl { bottom: 6%; left: 5%; --tilt: 6deg; --start-x: -40px; --start-y: 40px; }
+    .corner-br { bottom: 6%; right: 5%; --tilt: -7deg; --start-x: 40px; --start-y: 40px; }
 
-    .corner-photo:hover {
-      transform: scale(1.06) rotate(0deg) !important;
+    .corner-photos.show .corner-photo {
+      pointer-events: auto;
+      animation: cornerPop 750ms cubic-bezier(.2, .85, .3, 1.15) forwards;
+    }
+
+    .corner-photos.show .corner-tl { animation-delay: 0ms; }
+    .corner-photos.show .corner-tr { animation-delay: 100ms; }
+    .corner-photos.show .corner-bl { animation-delay: 200ms; }
+    .corner-photos.show .corner-br { animation-delay: 300ms; }
+
+    .corner-photos.show .corner-photo:hover {
+      transform: scale(1.06) rotate(0deg);
       box-shadow: 0 22px 40px rgba(110, 88, 42, 0.25);
       z-index: 3;
     }
@@ -138,6 +151,14 @@
       font-size: clamp(3rem, 11vw, 6rem);
       line-height: 0.95;
       text-shadow: 0 5px 22px rgba(156, 98, 20, 0.28);
+    }
+
+    .revealed-title {
+      display: none;
+    }
+
+    .revealed-title.show {
+      display: block;
       animation: titleReveal 1s cubic-bezier(.2,.7,.2,1) both;
     }
 
@@ -168,12 +189,21 @@
       box-shadow: 0 16px 34px rgba(156, 98, 20, 0.32);
     }
 
+    .open-button.opened {
+      background: #7e9d87;
+    }
+
     .scroll-note {
+      display: none;
       margin-top: 26px;
       color: #785b2c;
       font-family: system-ui, sans-serif;
       font-size: 0.85rem;
       animation: floatDown 1.5s ease-in-out infinite;
+    }
+
+    .scroll-note.show {
+      display: block;
     }
 
     section {
@@ -199,7 +229,9 @@
       line-height: 1.7;
     }
 
-    /* 8 ẢNH KỶ NIỆM HIỂN THỊ SẴN */
+    /* =======================================================
+       2. PHẦN 8 ẢNH KỶ NIỆM: HIỂN THỊ SẴN 4 ẢNH 1 TRANG POLAROID
+       ======================================================= */
     .memories {
       position: relative;
       overflow: hidden;
@@ -314,6 +346,9 @@
       object-fit: cover;
     }
 
+    /* =======================================================
+       3. PHẦN THỔI BÁNH KEM
+       ======================================================= */
     .cake-section {
       min-height: 660px;
       background: linear-gradient(180deg, #fff3c4, #fffdf2);
@@ -422,6 +457,9 @@
       text-align: center;
     }
 
+    /* =======================================================
+       4. PHẦN PHONG BÌ 2 LÁ THƯ LỜI CHÚC (NẰM DƯỚI BÁNH KEM)
+       ======================================================= */
     .collage-section {
       background: linear-gradient(135deg, #fff9db, #fff0b8);
     }
@@ -604,6 +642,7 @@
       font-weight: 600;
     }
 
+    /* Khung đọc chi tiết từng bức thư khi bấm vào */
     .letter-modal {
       position: fixed;
       inset: 0;
@@ -685,6 +724,9 @@
       color: #fff;
     }
 
+    /* =======================================================
+       5. PHẦN KẾT CUỐI CÙNG: BĂNG RÔN CHỮ CHẠY + ĐỘI HÌNH USAGI
+       ======================================================= */
     .finale-section {
       padding: 70px 0 100px;
       background:
@@ -836,10 +878,12 @@
 <body>
   <canvas id="confettiCanvas" aria-hidden="true"></canvas>
 
+  <!-- NÚT BẬT/TẮT NHẠC NỀN TỰ LẶP LẠI -->
   <button class="floating-music-btn" id="bgMusicBtn" type="button" aria-pressed="false">
     🎵 Bật nhạc nền
   </button>
 
+  <!-- 1. TRANG MỞ ĐẦU -->
   <header class="opening" id="opening">
     <div class="corner-photos" id="cornerPhotos" aria-hidden="true">
       <figure class="corner-photo corner-tl">
@@ -857,14 +901,15 @@
     </div>
 
     <div class="opening-card">
-      <h1 id="birthdayTitle">Happy 18th Birthday!</h1>
-      <p class="opening-subtitle" id="openingSubtitle">SWEET 18 — CÁT TIÊN ✨</p>
-      <button class="open-button" id="openButton" type="button">Bắn pháo giấy 🎉</button>
+      <h1 class="revealed-title" id="birthdayTitle">Happy 18th Birthday!</h1>
+      <p class="opening-subtitle" id="openingSubtitle">GUESS WHO JUST TURNED 18?</p>
+      <button class="open-button" id="openButton" type="button">Tap for your surprise</button>
       <div class="scroll-note" id="scrollNote">Scroll down for the memories ↓</div>
     </div>
   </header>
 
   <main>
+    <!-- 2. PHẦN 8 ẢNH KỶ NIỆM (HIỂN THỊ SẴN) -->
     <section class="memories" id="memories">
       <div class="section-inner">
         <h2 class="section-heading">Our Favourite Moments</h2>
@@ -937,6 +982,7 @@
       </div>
     </section>
 
+    <!-- 3. PHẦN THỔI BÁNH KEM -->
     <section class="cake-section">
       <div class="section-inner">
         <h2 class="section-heading">Make a Birthday Wish</h2>
@@ -964,6 +1010,7 @@
       </div>
     </section>
 
+    <!-- 4. PHẦN PHONG BÌ 2 LÁ THƯ LỜI CHÚC -->
     <section class="collage-section">
       <div class="section-inner">
         <h2 class="section-heading">Letters for You</h2>
@@ -1001,6 +1048,7 @@
       </div>
     </section>
 
+    <!-- 5. PHẦN KẾT CUỐI CÙNG: BĂNG RÔN CHỮ CHẠY + ĐỘI HÌNH USAGI -->
     <section class="finale-section">
       <div class="banner-marquee" aria-label="Happy Birthday, wish you sweet 18">
         <div class="marquee-track">
@@ -1033,6 +1081,7 @@
     </section>
   </main>
 
+  <!-- KHUNG ĐỌC TOÀN VĂN TỪNG BỨC THƯ KHI BẤM VÀO -->
   <div class="letter-modal" id="letterModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <article class="letter-paper">
       <button class="close-modal-btn" id="closeModalBtn" type="button" aria-label="Close letter">✕</button>
@@ -1045,6 +1094,9 @@
     const canvas = document.getElementById("confettiCanvas");
     const context = canvas.getContext("2d");
     const openButton = document.getElementById("openButton");
+    const birthdayTitle = document.getElementById("birthdayTitle");
+    const cornerPhotos = document.getElementById("cornerPhotos");
+    const scrollNote = document.getElementById("scrollNote");
 
     let pieces = [];
     let confettiFrame = null;
@@ -1107,13 +1159,18 @@
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
-    // Tự động bắn pháo giấy nhẹ khi vừa mở trang
-    window.addEventListener("load", () => launchConfetti(140));
-
+    // Bấm nút Tap ở trang đầu mới hiện Happy 18th Birthday + 4 ảnh góc + pháo giấy
     openButton.addEventListener("click", () => {
+      birthdayTitle.classList.add("show");
+      cornerPhotos.classList.add("show");
+      openButton.classList.add("opened");
+      openButton.textContent = "Happy Birthday! 🎉";
+      openButton.disabled = true;
+      scrollNote.classList.add("show");
       launchConfetti(190);
     });
 
+    // Nút nhạc nền tự phát & tự lặp lại
     const bgMusicBtn = document.getElementById("bgMusicBtn");
     let audioCtx = null;
     let isMusicOn = false;
@@ -1186,6 +1243,7 @@
       }
     });
 
+    // Thổi bánh kem
     const cake = document.getElementById("cake");
     const cakeMessage = document.getElementById("cakeMessage");
 
@@ -1200,54 +1258,8 @@
       }, 3500);
     });
 
+    // Phong bì 2 lá thư
     const envelopeStage = document.getElementById("envelopeStage");
     const envelopeBtn = document.getElementById("envelopeBtn");
     const envelopeLabel = document.getElementById("envelopeLabel");
-    const letterModal = document.getElementById("letterModal");
-    const closeModalBtn = document.getElementById("closeModalBtn");
-    const modalTitle = document.getElementById("modalTitle");
-    const modalBody = document.getElementById("modalBody");
-
-    const lettersData = {
-      letter1: {
-        title: "From me",
-        html: `
-          <p>Happy birthday to someone who makes ordinary days feel brighter. Thank you for every conversation, every adventure, and every moment of comfort you’ve given me.</p>
-          <p>I hope this year brings you unexpected happiness, beautiful memories, and everything you have been dreaming about. You deserve to be celebrated not only today, but every day.</p>
-          <p class="from">With love, always ♥</p>
-        `
-      },
-      letter2: {
-        title: "From my friend",
-        html: `
-          <p>Happy birthday! You are the kind of person who makes everyone around you feel happier, safer, and more understood.</p>
-          <p>I hope your birthday is full of good surprises, your favourite food, loud laughter, and the people who mean the most to you. Here’s to another unforgettable year together!</p>
-          <p class="from">Lots of love, from your friend</p>
-        `
-      }
-    };
-
-    envelopeBtn.addEventListener("click", () => {
-      const isOpen = envelopeStage.classList.toggle("open");
-      envelopeBtn.setAttribute("aria-expanded", String(isOpen));
-      envelopeLabel.textContent = isOpen ? "Tap on each letter to read it!" : "Tap the wax seal to open the envelope";
-      if (isOpen) launchConfetti(70);
-    });
-
-    document.querySelectorAll(".mini-letter").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const data = lettersData[btn.getAttribute("data-letter")];
-        if (!data) return;
-        modalTitle.textContent = data.title;
-        modalBody.innerHTML = data.html;
-        letterModal.classList.add("show");
-      });
-    });
-
-    closeModalBtn.addEventListener("click", () => letterModal.classList.remove("show"));
-    letterModal.addEventListener("click", (e) => {
-      if (e.target === letterModal) letterModal.classList.remove("show");
-    });
-  </script>
-</body>
-</html>
+    const letterModal = document.getElement
