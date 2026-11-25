@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>A Birthday Surprise for You</title>
+  <title>18th Birthday for Cát Tiên elele</title>
 
   <style>
     :root {
@@ -15,7 +15,7 @@
       --gold: #f2be4c;
     }
 
-    * {
+    *, *::before, *::after {
       box-sizing: border-box;
     }
 
@@ -36,11 +36,13 @@
     }
 
     .opening {
+      position: relative;
       min-height: 100vh;
       display: grid;
       place-items: center;
       padding: 24px;
       text-align: center;
+      overflow: hidden;
       background:
         radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.92) 0 8%, transparent 9%),
         radial-gradient(circle at 85% 30%, rgba(255, 255, 255, 0.75) 0 7%, transparent 8%),
@@ -48,15 +50,107 @@
     }
 
     .opening-card {
+      position: relative;
+      z-index: 2;
       width: min(540px, 100%);
+    }
+
+    /* 4 ảnh ở 4 góc màn hình đầu tiên */
+    .corner-photos {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .corner-photo {
+      position: absolute;
+      margin: 0;
+      width: clamp(120px, 17vw, 210px);
+      padding: 8px 8px 18px;
+      background: #ffffff;
+      border-radius: 6px;
+      box-shadow: 0 16px 34px rgba(110, 88, 42, 0.18);
+      opacity: 0;
+      pointer-events: auto;
+      transition: transform 250ms ease, box-shadow 250ms ease;
+    }
+
+    .corner-photo img {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      display: block;
+      object-fit: cover;
+      object-position: center 20%;
+      border-radius: 3px;
+    }
+
+    /* Vị trí từng góc */
+    .corner-tl {
+      top: 5%;
+      left: 4%;
+      --tilt: -8deg;
+      --start-x: -40px;
+      --start-y: -40px;
+    }
+
+    .corner-tr {
+      top: 5%;
+      right: 4%;
+      --tilt: 7deg;
+      --start-x: 40px;
+      --start-y: -40px;
+    }
+
+    .corner-bl {
+      bottom: 6%;
+      left: 5%;
+      --tilt: 6deg;
+      --start-x: -40px;
+      --start-y: 40px;
+    }
+
+    .corner-br {
+      bottom: 6%;
+      right: 5%;
+      --tilt: -7deg;
+      --start-x: 40px;
+      --start-y: 40px;
+    }
+
+    /* Hiệu ứng bung ra khi bấm nút */
+    .corner-photos.show .corner-photo {
+      animation: cornerPop 750ms cubic-bezier(.2, .85, .3, 1.15) forwards;
+    }
+
+    .corner-photos.show .corner-tl { animation-delay: 0ms; }
+    .corner-photos.show .corner-tr { animation-delay: 100ms; }
+    .corner-photos.show .corner-bl { animation-delay: 200ms; }
+    .corner-photos.show .corner-br { animation-delay: 300ms; }
+
+    .corner-photos.show .corner-photo:hover {
+      transform: scale(1.06) rotate(0deg);
+      box-shadow: 0 22px 40px rgba(110, 88, 42, 0.25);
+      z-index: 3;
+    }
+
+    @keyframes cornerPop {
+      0% {
+        opacity: 0;
+        transform: translate(var(--start-x), var(--start-y)) scale(0.5) rotate(0deg);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1) rotate(var(--tilt));
+      }
     }
 
     .opening h1 {
       margin: 0;
       color: white;
-      font-size: clamp(3rem, 12vw, 6.5rem);
+      font-size: clamp(3rem, 11vw, 6rem);
       line-height: 0.95;
-      text-shadow: 0 5px 22px rgba(156, 98, 20, 0.25);
+      text-shadow: 0 5px 22px rgba(156, 98, 20, 0.28);
     }
 
     .revealed-title {
@@ -475,6 +569,17 @@
         padding: 70px 18px;
       }
 
+      /* Thu nhỏ 4 ảnh góc trên điện thoại để không che chữ ở giữa */
+      .corner-photo {
+        width: 96px;
+        padding: 5px 5px 12px;
+      }
+
+      .corner-tl { top: 18px; left: 14px; }
+      .corner-tr { top: 18px; right: 14px; }
+      .corner-bl { bottom: 20px; left: 14px; }
+      .corner-br { bottom: 20px; right: 14px; }
+
       .photo-grid {
         display: flex;
         flex-direction: column;
@@ -531,13 +636,32 @@
   <canvas id="confettiCanvas" aria-hidden="true"></canvas>
 
   <header class="opening" id="opening">
+    <!-- 4 ảnh bung ra 4 góc khi bấm nút -->
+    <div class="corner-photos" id="cornerPhotos" aria-hidden="true">
+      <figure class="corner-photo corner-tl">
+        <img src="tien-1.jpg" alt="Cát Tiên 1"
+             onerror="this.src='https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=500'" />
+      </figure>
+      <figure class="corner-photo corner-tr">
+        <img src="tien-2.jpg" alt="Cát Tiên 2"
+             onerror="this.src='https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=500'" />
+      </figure>
+      <figure class="corner-photo corner-bl">
+        <img src="tien-3.jpg" alt="Cát Tiên 3"
+             onerror="this.src='https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=500'" />
+      </figure>
+      <figure class="corner-photo corner-br">
+        <img src="tien-4.jpg" alt="Cát Tiên 4"
+             onerror="this.src='https://images.unsplash.com/photo-1506869640319-fe1a24fd76dc?w=500'" />
+      </figure>
+    </div>
+
     <div class="opening-card">
       <h1 class="revealed-title" id="birthdayTitle">
-        Happy Birthday!
+        Happy 18th Birthday!
       </h1>
 
       <p class="opening-subtitle" id="openingSubtitle">
-        I made this little corner of the internet just for you.
       </p>
 
       <button class="open-button" id="openButton" type="button">
@@ -561,262 +685,4 @@
 
         <div class="photo-grid">
           <figure class="photo">
-            <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=900"
-                 alt="Friends together"
-                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22900%22 height=%22675%22%3E%3Crect width=%22100%25%22 height=%22100%25%22 fill=%22%23f7eed2%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2240%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EOur first photo%3C/text%3E%3C/svg%3E'" />
-            <figcaption>Our first favourite memory</figcaption>
-          </figure>
-
-          <figure class="photo">
-            <img src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=900"
-                 alt="Friends celebrating"
-                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22900%22 height=%22675%22%3E%3Crect width=%22100%25%22 height=%22100%25%22 fill=%22%23f7eed2%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2240%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EAnother memory%3C/text%3E%3C/svg%3E'" />
-            <figcaption>The day we laughed nonstop</figcaption>
-          </figure>
-
-          <figure class="photo">
-            <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=900"
-                 alt="Friends smiling"
-                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22900%22 height=%22675%22%3E%3Crect width=%22100%25%22 height=%22100%25%22 fill=%22%23f7eed2%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2240%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EOur smiles%3C/text%3E%3C/svg%3E'" />
-            <figcaption>One of many silly adventures</figcaption>
-          </figure>
-
-          <figure class="photo">
-            <img src="https://images.unsplash.com/photo-1506869640319-fe1a24fd76dc?w=900"
-                 alt="Friends spending time together"
-                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22900%22 height=%22675%22%3E%3Crect width=%22100%25%22 height=%22100%25%22 fill=%22%23f7eed2%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2240%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EThe best times%3C/text%3E%3C/svg%3E'" />
-            <figcaption>More memories to come</figcaption>
-          </figure>
-        </div>
-      </div>
-    </section>
-
-    <section class="collage-section">
-      <div class="section-inner">
-        <h2 class="section-heading">A Letter for You</h2>
-        <p class="section-description">
-          I collected all our favourite moments into one little birthday letter.
-          Tap the envelope to open it.
-        </p>
-
-        <button class="letter-envelope" id="letterEnvelope"
-                type="button" aria-expanded="false">
-          <span class="envelope-flap"></span>
-
-          <span class="letter-content">
-            <img src="https://placehold.co/900x560/fff9db/9c6214?text=Your+Canva+Collage"
-                 alt="A collage of photos and birthday memories" />
-          </span>
-
-          <span class="wax-seal" aria-hidden="true">♥</span>
-        </button>
-
-        <div class="envelope-label" id="envelopeLabel">
-          Tap to open my letter
-        </div>
-      </div>
-    </section>
-
-    <section class="cake-section">
-      <div class="section-inner">
-        <h2 class="section-heading">Make a Birthday Wish</h2>
-        <p class="section-description">
-          Close your eyes, make your wish, and tap the cake to blow out the candles.
-        </p>
-
-        <div class="cake-wrap">
-          <button class="cake" id="cake" type="button"
-                  aria-label="Blow out the birthday candles">
-            <span class="cake-stand"></span>
-            <span class="cake-base"></span>
-
-            <span class="candles" aria-hidden="true">
-              <span class="candle"><span class="flame"></span></span>
-              <span class="candle"><span class="flame"></span></span>
-              <span class="candle"><span class="flame"></span></span>
-              <span class="candle"><span class="flame"></span></span>
-              <span class="candle"><span class="flame"></span></span>
-            </span>
-          </button>
-
-          <p class="cake-message" id="cakeMessage" aria-live="polite">
-            The candles are waiting for you ✨
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="letters-section">
-      <div class="section-inner">
-        <h2 class="section-heading">A Few Birthday Wishes</h2>
-        <p class="section-description">
-          Words from the people who are lucky to know you.
-        </p>
-
-        <div class="letter-grid">
-          <article class="birthday-letter">
-            <h3>From me</h3>
-            <p>
-              Happy birthday to someone who makes ordinary days feel brighter.
-              Thank you for every conversation, every adventure, and every moment
-              of comfort you’ve given me.
-            </p>
-            <p>
-              I hope this year brings you unexpected happiness, beautiful memories,
-              and everything you have been dreaming about. You deserve to be celebrated
-              not only today, but every day.
-            </p>
-            <p class="from">With love, always ♥</p>
-          </article>
-
-          <article class="birthday-letter">
-            <h3>From my friend</h3>
-            <p>
-              Happy birthday! You are the kind of person who makes everyone around you
-              feel happier, safer, and more understood.
-            </p>
-            <p>
-              I hope your birthday is full of good surprises, your favourite food,
-              loud laughter, and the people who mean the most to you.
-              Here’s to another unforgettable year together!
-            </p>
-            <p class="from">Lots of love, from your friend</p>
-          </article>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <script>
-    const canvas = document.getElementById("confettiCanvas");
-    const context = canvas.getContext("2d");
-    const openButton = document.getElementById("openButton");
-    const birthdayTitle = document.getElementById("birthdayTitle");
-    const scrollNote = document.getElementById("scrollNote");
-
-    let pieces = [];
-    let confettiFrame = null;
-
-    function resizeCanvas() {
-      const scale = window.devicePixelRatio || 1;
-      canvas.width = window.innerWidth * scale;
-      canvas.height = window.innerHeight * scale;
-      canvas.style.width = window.innerWidth + "px";
-      canvas.style.height = window.innerHeight + "px";
-      context.setTransform(scale, 0, 0, scale, 0, 0);
-    }
-
-    function createConfetti(amount = 160) {
-      const colors = [
-        "#ffd166",
-        "#f2be4c",
-        "#ffe89e",
-        "#e6a82e",
-        "#fff3b8",
-        "#ffffff"
-      ];
-
-      pieces = [];
-
-      for (let i = 0; i < amount; i++) {
-        pieces.push({
-          x: Math.random() * window.innerWidth,
-          y: -20 - Math.random() * window.innerHeight * 0.5,
-          width: 6 + Math.random() * 8,
-          height: 8 + Math.random() * 12,
-          color: colors[Math.floor(Math.random() * colors.length)],
-          rotation: Math.random() * Math.PI,
-          speed: 2.5 + Math.random() * 5,
-          drift: -2 + Math.random() * 4,
-          spin: -0.12 + Math.random() * 0.24
-        });
-      }
-    }
-
-    function drawConfetti() {
-      context.clearRect(0, 0, window.innerWidth, window.innerHeight);
-
-      for (const piece of pieces) {
-        context.save();
-        context.translate(piece.x, piece.y);
-        context.rotate(piece.rotation);
-        context.fillStyle = piece.color;
-        context.fillRect(
-          -piece.width / 2,
-          -piece.height / 2,
-          piece.width,
-          piece.height
-        );
-        context.restore();
-
-        piece.y += piece.speed;
-        piece.x += piece.drift;
-        piece.rotation += piece.spin;
-      }
-
-      pieces = pieces.filter(piece => piece.y < window.innerHeight + 30);
-
-      if (pieces.length) {
-        confettiFrame = requestAnimationFrame(drawConfetti);
-      } else {
-        context.clearRect(0, 0, window.innerWidth, window.innerHeight);
-      }
-    }
-
-    function launchConfetti(amount) {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        return;
-      }
-
-      cancelAnimationFrame(confettiFrame);
-      createConfetti(amount);
-      drawConfetti();
-    }
-
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
-
-    openButton.addEventListener("click", () => {
-      birthdayTitle.classList.add("show");
-      openButton.classList.add("opened");
-      openButton.textContent = "Happy Birthday! 🎉";
-      openButton.disabled = true;
-      scrollNote.classList.add("show");
-      launchConfetti(190);
-    });
-
-    const letterEnvelope = document.getElementById("letterEnvelope");
-    const envelopeLabel = document.getElementById("envelopeLabel");
-
-    letterEnvelope.addEventListener("click", () => {
-      const isOpen = letterEnvelope.classList.toggle("open");
-      letterEnvelope.setAttribute("aria-expanded", String(isOpen));
-      envelopeLabel.textContent = isOpen
-        ? "Keep this memory open ♥"
-        : "Tap to open my letter";
-
-      if (isOpen) {
-        launchConfetti(60);
-      }
-    });
-
-    const cake = document.getElementById("cake");
-    const cakeMessage = document.getElementById("cakeMessage");
-
-    cake.addEventListener("click", () => {
-      if (cake.classList.contains("blown")) {
-        return;
-      }
-
-      cake.classList.add("blown");
-      cake.setAttribute("aria-label", "The birthday candles are blown out");
-      cakeMessage.textContent = "Your wish is on its way! Make sure it comes true ✨";
-      launchConfetti(180);
-
-      setTimeout(() => {
-        cakeMessage.textContent = "One more wish for one more amazing year 🎂";
-      }, 3500);
-    });
-  </script>
-</body>
-</html>
+            <img src="
