@@ -1047,4 +1047,535 @@
       *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
-        transition
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="confettiCanvas" aria-hidden="true"></canvas>
+
+  <!-- NÚT BẬT/TẮT NHẠC NỀN TỰ LẶP LẠI -->
+  <button class="floating-music-btn" id="bgMusicBtn" type="button" aria-pressed="false">
+    🎵 Bật nhạc nền
+  </button>
+
+  <header class="opening" id="opening">
+    <!-- 4 ảnh bung ra 4 góc khi bấm nút -->
+    <div class="corner-photos" id="cornerPhotos" aria-hidden="true">
+      <figure class="corner-photo corner-tl">
+        <img src="tien-1.jpg" alt="Cát Tiên 1"
+             onerror="this.src='https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=500'" />
+      </figure>
+      <figure class="corner-photo corner-tr">
+        <img src="tien-2.jpg" alt="Cát Tiên 2"
+             onerror="this.src='https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=500'" />
+      </figure>
+      <figure class="corner-photo corner-bl">
+        <img src="tien-3.jpg" alt="Cát Tiên 3"
+             onerror="this.src='https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=500'" />
+      </figure>
+      <figure class="corner-photo corner-br">
+        <img src="tien-4.jpg" alt="Cát Tiên 4"
+             onerror="this.src='https://images.unsplash.com/photo-1506869640319-fe1a24fd76dc?w=500'" />
+      </figure>
+    </div>
+
+    <div class="opening-card">
+      <h1 class="revealed-title" id="birthdayTitle">
+        Happy 18th Birthday!
+      </h1>
+
+      <p class="opening-subtitle" id="openingSubtitle">
+        GUESS WHO JUST TURNED 18?
+      </p>
+
+      <button class="open-button" id="openButton" type="button">
+        Tap for your surprise
+      </button>
+
+      <div class="scroll-note" id="scrollNote">
+        Scroll down for the memories ↓
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- 1. PHẦN 8 ẢNH KỶ NIỆM: HIỂN THỊ SẴN 4 ẢNH 1 TRANG POLAROID -->
+    <section class="memories" id="memories">
+      <div class="section-inner">
+        <h2 class="section-heading">Our Favourite Moments</h2>
+        <p class="section-description">
+          A few memories, lots of laughter, and every little moment that makes me
+          grateful to have you in my life.
+        </p>
+
+        <!-- TRANG 1: memory-1.jpg -> memory-4.jpg -->
+        <div class="memory-page">
+          <figure class="photo">
+            <span class="photo-deco deco-tl" aria-hidden="true">✨</span>
+            <span class="photo-deco deco-br" aria-hidden="true">🎊</span>
+            <div class="photo-frame">
+              <img src="memory-1.jpg" alt="Memory 1"
+                   onerror="this.src='https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=700'" />
+            </div>
+          </figure>
+
+          <figure class="photo">
+            <span class="photo-deco deco-tr" aria-hidden="true">💛</span>
+            <span class="photo-deco deco-bl" aria-hidden="true">🎉</span>
+            <div class="photo-frame">
+              <img src="memory-2.jpg" alt="Memory 2"
+                   onerror="this.src='https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=700'" />
+            </div>
+          </figure>
+
+          <figure class="photo">
+            <span class="photo-deco deco-tl" aria-hidden="true">🌟</span>
+            <span class="photo-deco deco-br" aria-hidden="true">🎈</span>
+            <div class="photo-frame">
+              <img src="memory-3.jpg" alt="Memory 3"
+                   onerror="this.src='https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=700'" />
+            </div>
+          </figure>
+
+          <figure class="photo">
+            <span class="photo-deco deco-tr" aria-hidden="true">✨</span>
+            <span class="photo-deco deco-bl" aria-hidden="true">🧡</span>
+            <div class="photo-frame">
+              <img src="memory-4.jpg" alt="Memory 4"
+                   onerror="this.src='https://images.unsplash.com/photo-1506869640319-fe1a24fd76dc?w=700'" />
+            </div>
+          </figure>
+        </div>
+
+        <!-- TRANG 2: memory-5.jpg -> memory-8.jpg -->
+        <div class="memory-page">
+          <figure class="photo">
+            <span class="photo-deco deco-tl" aria-hidden="true">🎉</span>
+            <span class="photo-deco deco-br" aria-hidden="true">✨</span>
+            <div class="photo-frame">
+              <img src="memory-5.jpg" alt="Memory 5"
+                   onerror="this.src='https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=700'" />
+            </div>
+          </figure>
+
+          <figure class="photo">
+            <span class="photo-deco deco-tr" aria-hidden="true">🌟</span>
+            <span class="photo-deco deco-bl" aria-hidden="true">💛</span>
+            <div class="photo-frame">
+              <img src="memory-6.jpg" alt="Memory 6"
+                   onerror="this.src='https://images.unsplash.com/photo-1523301343968-6a6ebf63c672?w=700'" />
+            </div>
+          </figure>
+
+          <figure class="photo">
+            <span class="photo-deco deco-tl" aria-hidden="true">🎈</span>
+            <span class="photo-deco deco-br" aria-hidden="true">🎊</span>
+            <div class="photo-frame">
+              <img src="memory-7.jpg" alt="Memory 7"
+                   onerror="this.src='https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=700'" />
+            </div>
+          </figure>
+
+          <figure class="photo">
+            <span class="photo-deco deco-tr" aria-hidden="true">🧡</span>
+            <span class="photo-deco deco-bl" aria-hidden="true">✨</span>
+            <div class="photo-frame">
+              <img src="memory-8.jpg" alt="Memory 8"
+                   onerror="this.src='https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=700'" />
+            </div>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. PHẦN THỔI BÁNH KEM -->
+    <section class="cake-section">
+      <div class="section-inner">
+        <h2 class="section-heading">Make a Birthday Wish</h2>
+        <p class="section-description">
+          Close your eyes, make your wish, and tap the cake to blow out the candles!
+        </p>
+
+        <div class="cake-wrap">
+          <button class="cake" id="cake" type="button"
+                  aria-label="Blow out the birthday candles">
+            <span class="cake-stand"></span>
+            <span class="cake-base"></span>
+
+            <span class="candles" aria-hidden="true">
+              <span class="candle"><span class="flame"></span></span>
+              <span class="candle"><span class="flame"></span></span>
+              <span class="candle"><span class="flame"></span></span>
+              <span class="candle"><span class="flame"></span></span>
+              <span class="candle"><span class="flame"></span></span>
+            </span>
+          </button>
+
+          <p class="cake-message" id="cakeMessage" aria-live="polite">
+            The candles are waiting for you ✨
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. PHẦN PHONG BÌ 2 LÁ THƯ LỜI CHÚC (NẰM DƯỚI SAU PHẦN BÁNH KEM) -->
+    <section class="collage-section">
+      <div class="section-inner">
+        <h2 class="section-heading">Letters for You</h2>
+        <p class="section-description">
+          Tap the envelope to reveal two letters inside, then tap each letter to read!
+        </p>
+
+        <div class="envelope-stage" id="envelopeStage">
+          <button class="envelope-box" id="envelopeBtn" type="button" aria-expanded="false">
+            <span class="envelope-flap"></span>
+            <span class="envelope-pocket"></span>
+            <span class="wax-seal" aria-hidden="true">♥</span>
+          </button>
+
+          <div class="two-letters">
+            <button class="mini-letter mini-letter-left" type="button" data-letter="letter1">
+              <span class="mini-letter-tag">Letter #1</span>
+              <h4>From me</h4>
+              <p>Happy birthday to someone who makes ordinary days feel brighter...</p>
+              <span class="mini-letter-cta">Tap to read →</span>
+            </button>
+
+            <button class="mini-letter mini-letter-right" type="button" data-letter="letter2">
+              <span class="mini-letter-tag">Letter #2</span>
+              <h4>From my friend</h4>
+              <p>Happy birthday! You are the kind of person who makes everyone around you feel happier...</p>
+              <span class="mini-letter-cta">Tap to read →</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="envelope-label" id="envelopeLabel">
+          Tap the wax seal to open the envelope
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. PHẦN KẾT CUỐI CÙNG: BĂNG RÔN CHỮ CHẠY + ĐỘI HÌNH USAGI CHÚC MỪNG -->
+    <section class="finale-section">
+      <div class="banner-marquee" aria-label="Happy Birthday, wish you sweet 18">
+        <div class="marquee-track">
+          <span>🎉 Happy Birthday, wish you sweet 18 ✨</span>
+          <span>🎂 Happy Birthday, wish you sweet 18 💛</span>
+          <span>🎉 Happy Birthday, wish you sweet 18 ✨</span>
+          <span>🎂 Happy Birthday, wish you sweet 18 💛</span>
+          <span>🎉 Happy Birthday, wish you sweet 18 ✨</span>
+          <span>🎂 Happy Birthday, wish you sweet 18 💛</span>
+        </div>
+      </div>
+
+      <div class="usagi-stage">
+        <div class="usagi-squad">
+          <div class="usagi-card">
+            <img src="usagi-1.gif" alt="Usagi cheering 1"
+                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Crect width=%22200%22 height=%22200%22 rx=%2224%22 fill=%22%23fff9db%22/%3E%3Cellipse cx=%2282%22 cy=%2246%22 rx=%2211%22 ry=%2234%22 transform=%22rotate(-8 82 46)%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Cellipse cx=%22118%22 cy=%2246%22 rx=%2211%22 ry=%2234%22 transform=%22rotate(8 118 46)%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Ccircle cx=%22100%22 cy=%22112%22 r=%2254%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Ccircle cx=%2282%22 cy=%22104%22 r=%225%22 fill=%22%234a3d24%22/%3E%3Ccircle cx=%22118%22 cy=%22104%22 r=%225%22 fill=%22%234a3d24%22/%3E%3Cellipse cx=%2268%22 cy=%22116%22 rx=%2210%22 ry=%226%22 fill=%22%23ffb3ba%22/%3E%3Cellipse cx=%22132%22 cy=%22116%22 rx=%2210%22 ry=%226%22 fill=%22%23ffb3ba%22/%3E%3Cpath d=%22M92 118 Q100 132 108 118 Z%22 fill=%22%23ff8fa3%22 stroke=%22%234a3d24%22 stroke-width=%223%22/%3E%3Ctext x=%22100%22 y=%22188%22 font-size=%2213%22 font-family=%22sans-serif%22 fill=%22%239c6214%22 text-anchor=%22middle%22%3Eusagi-1.gif%3C/text%3E%3C/svg%3E'" />
+          </div>
+
+          <div class="usagi-card">
+            <img src="usagi-2.gif" alt="Usagi cheering 2"
+                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Crect width=%22200%22 height=%22200%22 rx=%2224%22 fill=%22%23fff9db%22/%3E%3Cellipse cx=%2282%22 cy=%2246%22 rx=%2211%22 ry=%2234%22 transform=%22rotate(-8 82 46)%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Cellipse cx=%22118%22 cy=%2246%22 rx=%2211%22 ry=%2234%22 transform=%22rotate(8 118 46)%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Ccircle cx=%22100%22 cy=%22112%22 r=%2254%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Ccircle cx=%2282%22 cy=%22104%22 r=%225%22 fill=%22%234a3d24%22/%3E%3Ccircle cx=%22118%22 cy=%22104%22 r=%225%22 fill=%22%234a3d24%22/%3E%3Cellipse cx=%2268%22 cy=%22116%22 rx=%2210%22 ry=%226%22 fill=%22%23ffb3ba%22/%3E%3Cellipse cx=%22132%22 cy=%22116%22 rx=%2210%22 ry=%226%22 fill=%22%23ffb3ba%22/%3E%3Cpath d=%22M92 118 Q100 132 108 118 Z%22 fill=%22%23ff8fa3%22 stroke=%22%234a3d24%22 stroke-width=%223%22/%3E%3Ctext x=%22100%22 y=%22188%22 font-size=%2213%22 font-family=%22sans-serif%22 fill=%22%239c6214%22 text-anchor=%22middle%22%3Eusagi-2.gif%3C/text%3E%3C/svg%3E'" />
+          </div>
+
+          <div class="usagi-card">
+            <img src="usagi-3.gif" alt="Usagi cheering 3"
+                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Crect width=%22200%22 height=%22200%22 rx=%2224%22 fill=%22%23fff9db%22/%3E%3Cellipse cx=%2282%22 cy=%2246%22 rx=%2211%22 ry=%2234%22 transform=%22rotate(-8 82 46)%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Cellipse cx=%22118%22 cy=%2246%22 rx=%2211%22 ry=%2234%22 transform=%22rotate(8 118 46)%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Ccircle cx=%22100%22 cy=%22112%22 r=%2254%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Ccircle cx=%2282%22 cy=%22104%22 r=%225%22 fill=%22%234a3d24%22/%3E%3Ccircle cx=%22118%22 cy=%22104%22 r=%225%22 fill=%22%234a3d24%22/%3E%3Cellipse cx=%2268%22 cy=%22116%22 rx=%2210%22 ry=%226%22 fill=%22%23ffb3ba%22/%3E%3Cellipse cx=%22132%22 cy=%22116%22 rx=%2210%22 ry=%226%22 fill=%22%23ffb3ba%22/%3E%3Cpath d=%22M92 118 Q100 132 108 118 Z%22 fill=%22%23ff8fa3%22 stroke=%22%234a3d24%22 stroke-width=%223%22/%3E%3Ctext x=%22100%22 y=%22188%22 font-size=%2213%22 font-family=%22sans-serif%22 fill=%22%239c6214%22 text-anchor=%22middle%22%3Eusagi-3.gif%3C/text%3E%3C/svg%3E'" />
+          </div>
+
+          <div class="usagi-card">
+            <img src="usagi-4.gif" alt="Usagi cheering 4"
+                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Crect width=%22200%22 height=%22200%22 rx=%2224%22 fill=%22%23fff9db%22/%3E%3Cellipse cx=%2282%22 cy=%2246%22 rx=%2211%22 ry=%2234%22 transform=%22rotate(-8 82 46)%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Cellipse cx=%22118%22 cy=%2246%22 rx=%2211%22 ry=%2234%22 transform=%22rotate(8 118 46)%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Ccircle cx=%22100%22 cy=%22112%22 r=%2254%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Ccircle cx=%2282%22 cy=%22104%22 r=%225%22 fill=%22%234a3d24%22/%3E%3Ccircle cx=%22118%22 cy=%22104%22 r=%225%22 fill=%22%234a3d24%22/%3E%3Cellipse cx=%2268%22 cy=%22116%22 rx=%2210%22 ry=%226%22 fill=%22%23ffb3ba%22/%3E%3Cellipse cx=%22132%22 cy=%22116%22 rx=%2210%22 ry=%226%22 fill=%22%23ffb3ba%22/%3E%3Cpath d=%22M92 118 Q100 132 108 118 Z%22 fill=%22%23ff8fa3%22 stroke=%22%234a3d24%22 stroke-width=%223%22/%3E%3Ctext x=%22100%22 y=%22188%22 font-size=%2213%22 font-family=%22sans-serif%22 fill=%22%239c6214%22 text-anchor=%22middle%22%3Eusagi-4.gif%3C/text%3E%3C/svg%3E'" />
+          </div>
+        </div>
+
+        <p class="finale-sign">Una! Yaha! Happy 18th Birthday Cát Tiên ♥</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- KHUNG ĐỌC TOÀN VĂN TỪNG BỨC THƯ KHI BẤM VÀO -->
+  <div class="letter-modal" id="letterModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <article class="letter-paper">
+      <button class="close-modal-btn" id="closeModalBtn" type="button" aria-label="Close letter">✕</button>
+      <h3 id="modalTitle">From me</h3>
+      <div id="modalBody"></div>
+    </article>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("confettiCanvas");
+    const context = canvas.getContext("2d");
+    const openButton = document.getElementById("openButton");
+    const birthdayTitle = document.getElementById("birthdayTitle");
+    const cornerPhotos = document.getElementById("cornerPhotos");
+    const scrollNote = document.getElementById("scrollNote");
+
+    let pieces = [];
+    let confettiFrame = null;
+
+    function resizeCanvas() {
+      const scale = window.devicePixelRatio || 1;
+      canvas.width = window.innerWidth * scale;
+      canvas.height = window.innerHeight * scale;
+      canvas.style.width = window.innerWidth + "px";
+      canvas.style.height = window.innerHeight + "px";
+      context.setTransform(scale, 0, 0, scale, 0, 0);
+    }
+
+    function createConfetti(amount = 160) {
+      const colors = [
+        "#ffd166",
+        "#f2be4c",
+        "#ffe89e",
+        "#e6a82e",
+        "#fff3b8",
+        "#ffffff"
+      ];
+
+      pieces = [];
+
+      for (let i = 0; i < amount; i++) {
+        pieces.push({
+          x: Math.random() * window.innerWidth,
+          y: -20 - Math.random() * window.innerHeight * 0.5,
+          width: 6 + Math.random() * 8,
+          height: 8 + Math.random() * 12,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rotation: Math.random() * Math.PI,
+          speed: 2.5 + Math.random() * 5,
+          drift: -2 + Math.random() * 4,
+          spin: -0.12 + Math.random() * 0.24
+        });
+      }
+    }
+
+    function drawConfetti() {
+      context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+      for (const piece of pieces) {
+        context.save();
+        context.translate(piece.x, piece.y);
+        context.rotate(piece.rotation);
+        context.fillStyle = piece.color;
+        context.fillRect(
+          -piece.width / 2,
+          -piece.height / 2,
+          piece.width,
+          piece.height
+        );
+        context.restore();
+
+        piece.y += piece.speed;
+        piece.x += piece.drift;
+        piece.rotation += piece.spin;
+      }
+
+      pieces = pieces.filter(piece => piece.y < window.innerHeight + 30);
+
+      if (pieces.length) {
+        confettiFrame = requestAnimationFrame(drawConfetti);
+      } else {
+        context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      }
+    }
+
+    function launchConfetti(amount) {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        return;
+      }
+
+      cancelAnimationFrame(confettiFrame);
+      createConfetti(amount);
+      drawConfetti();
+    }
+
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    openButton.addEventListener("click", () => {
+      birthdayTitle.classList.add("show");
+      cornerPhotos.classList.add("show");
+      openButton.classList.add("opened");
+      openButton.textContent = "Happy Birthday! 🎉";
+      openButton.disabled = true;
+      scrollNote.classList.add("show");
+      launchConfetti(190);
+    });
+
+    // =======================================================
+    // NÚT NHẠC NỀN HAPPY BIRTHDAY TỰ ĐỘNG PHÁT & TỰ REPLAY
+    // =======================================================
+    const bgMusicBtn = document.getElementById("bgMusicBtn");
+    let audioCtx = null;
+    let isMusicOn = false;
+    let loopTimer = null;
+    let activeOscillators = [];
+
+    function stopBgMusic() {
+      isMusicOn = false;
+      clearTimeout(loopTimer);
+      activeOscillators.forEach((osc) => {
+        try { osc.stop(); } catch (e) {}
+      });
+      activeOscillators = [];
+      bgMusicBtn.classList.remove("playing");
+      bgMusicBtn.setAttribute("aria-pressed", "false");
+      bgMusicBtn.textContent = "🎵 Bật nhạc nền";
+    }
+
+    function scheduleBirthdayLoop() {
+      if (!isMusicOn) return;
+
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) return;
+
+      if (!audioCtx) {
+        audioCtx = new AudioContext();
+      }
+      if (audioCtx.state === "suspended") {
+        audioCtx.resume();
+      }
+
+      const notes = [
+        [261.63, 0.35], [261.63, 0.25], [293.66, 0.6], [261.63, 0.6], [349.23, 0.6], [329.63, 1.1],
+        [261.63, 0.35], [261.63, 0.25], [293.66, 0.6], [261.63, 0.6], [392.00, 0.6], [349.23, 1.1],
+        [261.63, 0.35], [261.63, 0.25], [523.25, 0.6], [440.00, 0.6], [349.23, 0.6], [329.63, 0.6], [293.66, 1.1],
+        [466.16, 0.35], [466.16, 0.25], [440.00, 0.6], [349.23, 0.6], [392.00, 0.6], [349.23, 1.3]
+      ];
+
+      let time = audioCtx.currentTime + 0.05;
+      activeOscillators = [];
+
+      notes.forEach(([freq, dur]) => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(freq, time);
+
+        gain.gain.setValueAtTime(0.001, time);
+        gain.gain.exponentialRampToValueAtTime(0.18, time + 0.04);
+        gain.gain.exponentialRampToValueAtTime(0.001, time + dur);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(time);
+        osc.stop(time + dur + 0.02);
+        activeOscillators.push(osc);
+
+        time += dur + 0.06;
+      });
+
+      const loopDurationMs = (time - audioCtx.currentTime + 0.8) * 1000;
+      loopTimer = setTimeout(() => {
+        if (isMusicOn) {
+          scheduleBirthdayLoop();
+        }
+      }, loopDurationMs);
+    }
+
+    bgMusicBtn.addEventListener("click", () => {
+      if (isMusicOn) {
+        stopBgMusic();
+      } else {
+        isMusicOn = true;
+        bgMusicBtn.classList.add("playing");
+        bgMusicBtn.setAttribute("aria-pressed", "true");
+        bgMusicBtn.textContent = "🎶 Đang phát (Tắt)";
+        scheduleBirthdayLoop();
+      }
+    });
+
+    // =======================================================
+    // THỔI BÁNH KEM
+    // =======================================================
+    const cake = document.getElementById("cake");
+    const cakeMessage = document.getElementById("cakeMessage");
+
+    cake.addEventListener("click", () => {
+      if (cake.classList.contains("blown")) {
+        return;
+      }
+
+      cake.classList.add("blown");
+      cake.setAttribute("aria-label", "The birthday candles are blown out");
+      cakeMessage.textContent = "Your wish is on its way! Make sure it comes true ✨";
+      launchConfetti(180);
+
+      setTimeout(() => {
+        cakeMessage.textContent = "One more wish for one more amazing year 🎂";
+      }, 3500);
+    });
+
+    // =======================================================
+    // XỬ LÝ PHONG BÌ -> HIỆN 2 THƯ NGHIÊNG -> BẤM ĐỌC TỪNG THƯ
+    // =======================================================
+    const envelopeStage = document.getElementById("envelopeStage");
+    const envelopeBtn = document.getElementById("envelopeBtn");
+    const envelopeLabel = document.getElementById("envelopeLabel");
+    const letterModal = document.getElementById("letterModal");
+    const closeModalBtn = document.getElementById("closeModalBtn");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalBody = document.getElementById("modalBody");
+
+    // NỘI DUNG 2 BỨC THƯ (Sửa lời chúc của bạn & bạn thân ở đây!)
+    const lettersData = {
+      letter1: {
+        title: "From me",
+        html: `
+          <p>Happy birthday to someone who makes ordinary days feel brighter. Thank you for every conversation, every adventure, and every moment of comfort you’ve given me.</p>
+          <p>I hope this year brings you unexpected happiness, beautiful memories, and everything you have been dreaming about. You deserve to be celebrated not only today, but every day.</p>
+          <p class="from">With love, always ♥</p>
+        `
+      },
+      letter2: {
+        title: "From my friend",
+        html: `
+          <p>Happy birthday! You are the kind of person who makes everyone around you feel happier, safer, and more understood.</p>
+          <p>I hope your birthday is full of good surprises, your favourite food, loud laughter, and the people who mean the most to you. Here’s to another unforgettable year together!</p>
+          <p class="from">Lots of love, from your friend</p>
+        `
+      }
+    };
+
+    envelopeBtn.addEventListener("click", () => {
+      const isOpen = envelopeStage.classList.toggle("open");
+      envelopeBtn.setAttribute("aria-expanded", String(isOpen));
+      envelopeLabel.textContent = isOpen
+        ? "Tap on each letter to read it!"
+        : "Tap the wax seal to open the envelope";
+
+      if (isOpen) {
+        launchConfetti(70);
+      }
+    });
+
+    document.querySelectorAll(".mini-letter").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const key = btn.getAttribute("data-letter");
+        const data = lettersData[key];
+        if (!data) return;
+        modalTitle.textContent = data.title;
+        modalBody.innerHTML = data.html;
+        letterModal.classList.add("show");
+      });
+    });
+
+    closeModalBtn.addEventListener("click", () => {
+      letterModal.classList.remove("show");
+    });
+
+    letterModal.addEventListener("click", (e) => {
+      if (e.target === letterModal) {
+        letterModal.classList.remove("show");
+      }
+    });
+  </script>
+</body>
+</html>
