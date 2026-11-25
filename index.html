@@ -66,7 +66,7 @@
     .corner-photo {
       position: absolute;
       margin: 0;
-      width: clamp(150px, 19vw, 240px);
+      width: clamp(165px, 21vw, 280px);
       padding: 8px 8px 18px;
       background: #ffffff;
       border-radius: 6px;
@@ -85,7 +85,6 @@
       border-radius: 3px;
     }
 
-    /* Vị trí từng góc */
     .corner-tl {
       top: 5%;
       left: 4%;
@@ -118,7 +117,6 @@
       --start-y: 40px;
     }
 
-    /* Hiệu ứng bung ra khi bấm nút */
     .corner-photos.show .corner-photo {
       animation: cornerPop 750ms cubic-bezier(.2, .85, .3, 1.15) forwards;
     }
@@ -189,7 +187,8 @@
     }
 
     .open-button:focus-visible,
-    .letter-envelope:focus-visible,
+    .envelope-box:focus-visible,
+    .mini-letter:focus-visible,
     .cake:focus-visible,
     .photo:focus-visible {
       outline: 4px solid var(--ink);
@@ -236,7 +235,9 @@
       line-height: 1.7;
     }
 
-    /* Phần 8 ảnh kỷ niệm: 4 ảnh 1 trang Polaroid, lướt xuống có 4 ảnh tiếp */
+    /* =======================================================
+       PHẦN 8 ẢNH KỶ NIỆM: 4 ẢNH 1 TRANG POLAROID, LƯỚT XUỐNG CÓ 4 ẢNH TIẾP
+       ======================================================= */
     .memories {
       position: relative;
       overflow: hidden;
@@ -267,7 +268,6 @@
       margin-bottom: 0;
     }
 
-    /* Khung Polaroid nghệ thuật, ngả nghiêng & đè nhẹ lên nhau */
     .photo {
       position: relative;
       margin: 0;
@@ -282,7 +282,6 @@
       transition: transform 280ms cubic-bezier(.2, .8, .2, 1), box-shadow 280ms ease;
     }
 
-    /* Trang 1: 4 tấm kích thước xêm xêm, ngả nghiêng tự nhiên */
     .memory-page:nth-of-type(1) .photo:nth-child(1) {
       width: min(325px, 92%);
       aspect-ratio: 4 / 4.6;
@@ -319,7 +318,6 @@
       z-index: 3;
     }
 
-    /* Trang 2: Đổi góc nghiêng và kích thước xêm xêm khác đi cho sinh động */
     .memory-page:nth-of-type(2) .photo:nth-child(1) {
       width: min(295px, 88%);
       aspect-ratio: 4 / 4.3;
@@ -362,7 +360,6 @@
       z-index: 10 !important;
     }
 
-    /* Miếng băng dính giấy (washi tape) dán trên đầu khung Polaroid */
     .photo::before {
       content: "";
       position: absolute;
@@ -383,7 +380,6 @@
       transform: translateX(-50%) rotate(4deg);
     }
 
-    /* Họa tiết confetti/sao/tim trang trí xung quanh khung ảnh */
     .photo-deco {
       position: absolute;
       pointer-events: none;
@@ -403,7 +399,6 @@
       to { transform: scale(1.12) rotate(8deg); }
     }
 
-    /* Khung chứa ảnh bên trong viền Polaroid */
     .photo-frame {
       position: relative;
       width: 100%;
@@ -456,64 +451,64 @@
       pointer-events: none;
     }
 
+    /* =======================================================
+       PHẦN BỨC THƯ: BẤM MỞ PHONG BÌ -> HIỆN 2 THƯ NGHIÊNG NGHIÊNG
+       -> BẤM TỪNG THƯ SẼ PHÓNG TO ĐỌC NỘI DUNG TỪNG NGƯỜI
+       ======================================================= */
     .collage-section {
       background: linear-gradient(135deg, #fff9db, #fff0b8);
     }
 
-    .letter-envelope {
+    .envelope-stage {
       position: relative;
       width: min(580px, 92vw);
-      height: min(360px, 56vw);
-      margin: 70px auto;
+      height: 360px;
+      margin: 120px auto 30px;
+    }
+
+    .envelope-box {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
       background: #f5df9c;
       border: 0;
-      border-radius: 8px;
+      border-radius: 10px;
       box-shadow: 0 22px 45px rgba(110, 88, 42, 0.16);
       cursor: pointer;
       perspective: 1000px;
+      z-index: 1;
+    }
+
+    /* Mặt trước túi phong bì che phần dưới 2 lá thư khi chưa mở */
+    .envelope-pocket {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(245, 223, 156, 0.2) 0 42%, #f2d685 43% 100%);
+      border-radius: 10px;
+      z-index: 3;
+      pointer-events: none;
     }
 
     .envelope-flap {
       position: absolute;
-      z-index: 3;
+      z-index: 4;
       inset: 0;
       background: #e8cb78;
       clip-path: polygon(0 0, 100% 0, 50% 58%);
       transform-origin: top;
-      transition: transform 700ms ease;
+      transition: transform 700ms ease, z-index 0s 350ms;
+      pointer-events: none;
     }
 
-    .letter-envelope.open .envelope-flap {
+    .envelope-stage.open .envelope-flap {
       transform: rotateX(180deg);
-    }
-
-    .letter-content {
-      position: absolute;
-      z-index: 2;
-      inset: 28px 32px -70px;
-      overflow: hidden;
-      background: white;
-      border: 8px solid #fcf7e6;
-      border-radius: 4px;
-      box-shadow: 0 16px 30px rgba(96, 76, 36, 0.18);
-      transform: translateY(36%);
-      transition: transform 800ms ease 250ms;
-    }
-
-    .letter-envelope.open .letter-content {
-      transform: translateY(-88%);
-    }
-
-    .letter-content img {
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: cover;
+      z-index: 1;
     }
 
     .wax-seal {
       position: absolute;
-      z-index: 4;
+      z-index: 5;
       left: 50%;
       bottom: 26px;
       width: 74px;
@@ -527,22 +522,216 @@
       border-radius: 50%;
       transform: translateX(-50%);
       transition: opacity 300ms ease, transform 500ms ease;
+      pointer-events: none;
     }
 
-    .letter-envelope.open .wax-seal {
+    .envelope-stage.open .wax-seal {
       opacity: 0;
       transform: translateX(-50%) scale(0.5);
     }
 
+    /* 2 lá thư nghiêng nghiêng nằm trong phong bì và trồi lên khi bấm */
+    .two-letters {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .envelope-stage.open .two-letters {
+      z-index: 6;
+    }
+
+    .mini-letter {
+      position: absolute;
+      bottom: 24px;
+      width: 47%;
+      height: 250px;
+      padding: 20px 18px;
+      background:
+        linear-gradient(rgba(255,255,255,0.95), rgba(255,255,255,0.95)),
+        repeating-linear-gradient(0deg, transparent 0 23px, #efe2be 24px);
+      border: 2px solid #ead8a8;
+      border-radius: 6px;
+      box-shadow: 0 14px 28px rgba(96, 76, 36, 0.2);
+      text-align: left;
+      color: var(--ink);
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(20px) scale(0.85);
+      transition: transform 700ms cubic-bezier(.2, .85, .3, 1.15), opacity 400ms ease, box-shadow 220ms ease;
+    }
+
+    .mini-letter-left {
+      left: 4%;
+    }
+
+    .mini-letter-right {
+      right: 4%;
+    }
+
+    /* Khi mở phong bì: 2 thư trồi lên nghiêng nghiêng đè nhẹ lên nhau */
+    .envelope-stage.open .mini-letter {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .envelope-stage.open .mini-letter-left {
+      transform: translateY(-135px) rotate(-7deg);
+      transition-delay: 220ms;
+    }
+
+    .envelope-stage.open .mini-letter-right {
+      transform: translateY(-145px) rotate(7deg);
+      transition-delay: 320ms;
+    }
+
+    .envelope-stage.open .mini-letter-left:hover {
+      transform: translateY(-148px) rotate(-3deg) scale(1.04);
+      box-shadow: 0 22px 40px rgba(96, 76, 36, 0.28);
+      z-index: 8;
+    }
+
+    .envelope-stage.open .mini-letter-right:hover {
+      transform: translateY(-158px) rotate(3deg) scale(1.04);
+      box-shadow: 0 22px 40px rgba(96, 76, 36, 0.28);
+      z-index: 8;
+    }
+
+    .mini-letter-tag {
+      display: inline-block;
+      padding: 3px 10px;
+      margin-bottom: 10px;
+      font-family: system-ui, sans-serif;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #fff;
+      background: var(--pink-dark);
+      border-radius: 999px;
+    }
+
+    .mini-letter h4 {
+      margin: 0 0 8px;
+      color: var(--pink-dark);
+      font-size: 1.15rem;
+    }
+
+    .mini-letter p {
+      margin: 0;
+      font-size: 0.85rem;
+      line-height: 1.55;
+      color: #6b5630;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .mini-letter-cta {
+      position: absolute;
+      bottom: 14px;
+      right: 14px;
+      font-family: system-ui, sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--pink-dark);
+    }
+
     .envelope-label {
-      margin-top: 24px;
+      margin-top: 18px;
       color: #826b3e;
       font-family: system-ui, sans-serif;
       text-align: center;
+      font-weight: 600;
     }
 
+    /* Khung đọc chi tiết từng bức thư khi bấm vào */
+    .letter-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: none;
+      place-items: center;
+      padding: 20px;
+      background: rgba(54, 42, 20, 0.55);
+      backdrop-filter: blur(4px);
+    }
+
+    .letter-modal.show {
+      display: grid;
+      animation: fadeIn 250ms ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .letter-paper {
+      position: relative;
+      width: min(560px, 100%);
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 44px 36px 36px;
+      background:
+        linear-gradient(rgba(255,255,255,0.93), rgba(255,255,255,0.93)),
+        repeating-linear-gradient(0deg, transparent 0 31px, #efe2be 32px);
+      border: 2px solid #ead8a8;
+      border-radius: 8px;
+      box-shadow: 0 26px 60px rgba(45, 34, 15, 0.35);
+      line-height: 1.85;
+      animation: paperPop 320ms cubic-bezier(.2, .85, .3, 1.1);
+    }
+
+    @keyframes paperPop {
+      from { opacity: 0; transform: scale(0.9) translateY(16px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .letter-paper h3 {
+      margin: 0 0 16px;
+      color: var(--pink-dark);
+      font-size: 1.75rem;
+    }
+
+    .letter-paper p {
+      margin: 0 0 16px;
+      font-size: 1.05rem;
+    }
+
+    .letter-paper .from {
+      margin-top: 24px;
+      color: #826b3e;
+      font-style: italic;
+      font-weight: 700;
+    }
+
+    .close-modal-btn {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 36px;
+      height: 36px;
+      border: 0;
+      border-radius: 50%;
+      background: #f5df9c;
+      color: var(--pink-dark);
+      font-family: system-ui, sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+
+    .close-modal-btn:hover {
+      background: var(--pink-dark);
+      color: #fff;
+    }
+
+    /* =======================================================
+       PHẦN BÁNH KEM + NHẠC HAPPY BIRTHDAY TO YOU
+       ======================================================= */
     .cake-section {
-      min-height: 700px;
+      min-height: 680px;
       background: linear-gradient(180deg, #fff3c4, #fffdf2);
     }
 
@@ -555,7 +744,7 @@
       position: relative;
       width: min(430px, 82vw);
       height: 270px;
-      margin-top: 50px;
+      margin-top: 40px;
       background: none;
       border: 0;
       cursor: pointer;
@@ -653,37 +842,122 @@
       text-align: center;
     }
 
-    .letters-section {
-      background: #fffdf5;
-    }
-
-    .letter-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 32px;
-    }
-
-    .birthday-letter {
-      min-height: 420px;
-      padding: 42px;
-      background:
-        linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)),
-        repeating-linear-gradient(0deg, transparent 0 31px, #efe2be 32px);
-      border: 1px solid #ede2c4;
-      border-radius: 3px;
-      box-shadow: 0 18px 45px rgba(110, 88, 42, 0.12);
-      line-height: 1.85;
-    }
-
-    .birthday-letter h3 {
-      margin-top: 0;
+    .music-btn {
+      margin-top: 10px;
+      padding: 10px 20px;
+      border: 2px solid var(--pink-dark);
+      border-radius: 999px;
+      background: #fff;
       color: var(--pink-dark);
-      font-size: 1.7rem;
+      font-family: system-ui, sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 180ms ease, color 180ms ease;
     }
 
-    .birthday-letter .from {
-      margin-top: 28px;
-      color: #826b3e;
+    .music-btn:hover {
+      background: var(--pink-dark);
+      color: #fff;
+    }
+
+    /* =======================================================
+       PHẦN CUỐI CÙNG: BĂNG RÔN CHỮ CHẠY + ĐỘI HÌNH USAGI CHÚC MỪNG
+       ======================================================= */
+    .finale-section {
+      padding: 70px 0 90px;
+      background:
+        radial-gradient(circle at 18% 30%, rgba(255, 224, 130, 0.5) 0 10px, transparent 11px),
+        radial-gradient(circle at 82% 25%, rgba(242, 190, 76, 0.4) 0 14px, transparent 15px),
+        radial-gradient(circle at 50% 85%, rgba(255, 224, 130, 0.45) 0 12px, transparent 13px),
+        linear-gradient(180deg, #fffdf2, #fff5cc);
+      overflow: hidden;
+    }
+
+    /* Băng rôn chữ chạy liên tục */
+    .banner-marquee {
+      position: relative;
+      width: 100%;
+      padding: 18px 0;
+      margin-bottom: 54px;
+      background: linear-gradient(90deg, #f2be4c, #ffd97d, #f2be4c);
+      border-top: 3px dashed #ffffff;
+      border-bottom: 3px dashed #ffffff;
+      box-shadow: 0 12px 28px rgba(156, 98, 20, 0.16);
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .marquee-track {
+      display: inline-flex;
+      animation: marqueeScroll 18s linear infinite;
+    }
+
+    .marquee-track span {
+      padding-right: 48px;
+      color: #6b4108;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-weight: 900;
+      font-size: clamp(1.3rem, 3.5vw, 2rem);
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 0 rgba(255, 255, 255, 0.7);
+    }
+
+    @keyframes marqueeScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Đội hình 4 nhân vật Usagi chúc mừng */
+    .usagi-stage {
+      width: min(920px, 92%);
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .usagi-squad {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 20px;
+      align-items: end;
+      justify-items: center;
+    }
+
+    .usagi-card {
+      position: relative;
+      width: 100%;
+      max-width: 195px;
+      aspect-ratio: 1 / 1;
+      padding: 12px;
+      background: #ffffff;
+      border: 4px solid #ffe499;
+      border-radius: 24px;
+      box-shadow: 0 14px 30px rgba(156, 98, 20, 0.14);
+      display: grid;
+      place-items: center;
+      animation: usagiBounce 1.8s ease-in-out infinite;
+    }
+
+    .usagi-card:nth-child(2) { animation-delay: 0.3s; }
+    .usagi-card:nth-child(3) { animation-delay: 0.6s; }
+    .usagi-card:nth-child(4) { animation-delay: 0.9s; }
+
+    @keyframes usagiBounce {
+      0%, 100% { transform: translateY(0) rotate(-2deg); }
+      50% { transform: translateY(-10px) rotate(2deg); }
+    }
+
+    .usagi-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 16px;
+    }
+
+    .finale-sign {
+      margin-top: 36px;
+      color: var(--pink-dark);
+      font-size: 1.15rem;
       font-style: italic;
     }
 
@@ -730,7 +1004,6 @@
         padding: 70px 18px;
       }
 
-      /* Thu nhỏ 4 ảnh góc trên điện thoại để không che chữ ở giữa */
       .corner-photo {
         width: 96px;
         padding: 5px 5px 12px;
@@ -763,25 +1036,28 @@
         top: -9px;
       }
 
-      .letter-envelope {
-        height: 300px;
+      .envelope-stage {
+        height: 290px;
+        margin-top: 110px;
       }
 
-      .letter-content {
-        inset: 24px 20px -40px;
+      .mini-letter {
+        width: 48%;
+        height: 210px;
+        padding: 14px 12px;
       }
 
-      .letter-envelope.open .letter-content {
-        transform: translateY(-82%);
+      .envelope-stage.open .mini-letter-left {
+        transform: translateY(-115px) rotate(-6deg);
       }
 
-      .letter-grid {
-        grid-template-columns: 1fr;
+      .envelope-stage.open .mini-letter-right {
+        transform: translateY(-122px) rotate(6deg);
       }
 
-      .birthday-letter {
-        min-height: 0;
-        padding: 32px 26px;
+      .usagi-squad {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
       }
 
       .cake {
@@ -835,7 +1111,7 @@
       </h1>
 
       <p class="opening-subtitle" id="openingSubtitle">
-        GUESS WHO JUST TURNED 18🫵🫵🫵?
+        GUESS WHO JUST TURNED 18?
       </p>
 
       <button class="open-button" id="openButton" type="button">
@@ -849,6 +1125,7 @@
   </header>
 
   <main>
+    <!-- PHẦN 8 ẢNH KỶ NIỆM: 4 ẢNH 1 TRANG, LƯỚT XUỐNG CÓ 4 ẢNH TIẾP -->
     <section class="memories" id="memories">
       <div class="section-inner">
         <h2 class="section-heading">Our Favourite Moments</h2>
@@ -857,7 +1134,7 @@
           grateful to have you in my life. Tap each frame to reveal a memory!
         </p>
 
-        <!-- TRANG 1: 4 ẢNH ĐẦU TIÊN (memory-1.jpg -> memory-4.jpg) -->
+        <!-- TRANG 1: memory-1.jpg -> memory-4.jpg -->
         <div class="memory-page">
           <button class="photo" type="button" aria-label="Reveal memory 1">
             <span class="photo-deco deco-tl" aria-hidden="true">✨</span>
@@ -900,7 +1177,7 @@
           </button>
         </div>
 
-        <!-- LƯỚT XUỐNG CÓ 4 ẢNH TIẾP THEO (memory-5.jpg -> memory-8.jpg) -->
+        <!-- TRANG 2: memory-5.jpg -> memory-8.jpg -->
         <div class="memory-page">
           <button class="photo" type="button" aria-label="Reveal memory 5">
             <span class="photo-deco deco-tl" aria-hidden="true">🎉</span>
@@ -945,37 +1222,50 @@
       </div>
     </section>
 
+    <!-- PHẦN PHONG BÌ THƯ: BẤM 1 LẦN HIỆN 2 THƯ NGHIÊNG -> BẤM TỪNG THƯ ĐỂ ĐỌC -->
     <section class="collage-section">
       <div class="section-inner">
-        <h2 class="section-heading">A Letter for You</h2>
+        <h2 class="section-heading">Letters for You</h2>
         <p class="section-description">
-          I collected all our favourite moments into one little birthday letter.
-          Tap the envelope to open it.
+          Tap the envelope to reveal two letters inside, then tap each letter to read!
         </p>
 
-        <button class="letter-envelope" id="letterEnvelope"
-                type="button" aria-expanded="false">
-          <span class="envelope-flap"></span>
+        <div class="envelope-stage" id="envelopeStage">
+          <button class="envelope-box" id="envelopeBtn" type="button" aria-expanded="false">
+            <span class="envelope-flap"></span>
+            <span class="envelope-pocket"></span>
+            <span class="wax-seal" aria-hidden="true">♥</span>
+          </button>
 
-          <span class="letter-content">
-            <img src="https://placehold.co/900x560/fff9db/9c6214?text=Your+Canva+Collage"
-                 alt="A collage of photos and birthday memories" />
-          </span>
+          <div class="two-letters">
+            <button class="mini-letter mini-letter-left" type="button" data-letter="letter1">
+              <span class="mini-letter-tag">Letter #1</span>
+              <h4>From me</h4>
+              <p>Happy birthday to someone who makes ordinary days feel brighter...</p>
+              <span class="mini-letter-cta">Tap to read →</span>
+            </button>
 
-          <span class="wax-seal" aria-hidden="true">♥</span>
-        </button>
+            <button class="mini-letter mini-letter-right" type="button" data-letter="letter2">
+              <span class="mini-letter-tag">Letter #2</span>
+              <h4>From my friend</h4>
+              <p>Happy birthday! You are the kind of person who makes everyone around you feel happier...</p>
+              <span class="mini-letter-cta">Tap to read →</span>
+            </button>
+          </div>
+        </div>
 
         <div class="envelope-label" id="envelopeLabel">
-          Tap to open my letter
+          Tap the wax seal to open the envelope
         </div>
       </div>
     </section>
 
+    <!-- PHẦN BÁNH KEM + NHẠC HAPPY BIRTHDAY TO YOU -->
     <section class="cake-section">
       <div class="section-inner">
         <h2 class="section-heading">Make a Birthday Wish</h2>
         <p class="section-description">
-          Close your eyes, make your wish, and tap the cake to blow out the candles.
+          Close your eyes, make your wish, and tap the cake to blow out the candles!
         </p>
 
         <div class="cake-wrap">
@@ -996,50 +1286,64 @@
           <p class="cake-message" id="cakeMessage" aria-live="polite">
             The candles are waiting for you ✨
           </p>
+
+          <button class="music-btn" id="musicBtn" type="button">
+            🎵 Play Happy Birthday Song
+          </button>
         </div>
       </div>
     </section>
 
-    <section class="letters-section">
-      <div class="section-inner">
-        <h2 class="section-heading">A Few Birthday Wishes</h2>
-        <p class="section-description">
-          Words from the people who are lucky to know you.
-        </p>
-
-        <div class="letter-grid">
-          <article class="birthday-letter">
-            <h3>From me</h3>
-            <p>
-              Happy birthday to someone who makes ordinary days feel brighter.
-              Thank you for every conversation, every adventure, and every moment
-              of comfort you’ve given me.
-            </p>
-            <p>
-              I hope this year brings you unexpected happiness, beautiful memories,
-              and everything you have been dreaming about. You deserve to be celebrated
-              not only today, but every day.
-            </p>
-            <p class="from">With love, always ♥</p>
-          </article>
-
-          <article class="birthday-letter">
-            <h3>From my friend</h3>
-            <p>
-              Happy birthday! You are the kind of person who makes everyone around you
-              feel happier, safer, and more understood.
-            </p>
-            <p>
-              I hope your birthday is full of good surprises, your favourite food,
-              loud laughter, and the people who mean the most to you.
-              Here’s to another unforgettable year together!
-            </p>
-            <p class="from">Lots of love, from your friend</p>
-          </article>
+    <!-- PHẦN KẾT CUỐI CÙNG: BĂNG RÔN CHỮ CHẠY + ĐỘI HÌNH USAGI CHÚC MỪNG -->
+    <section class="finale-section">
+      <div class="banner-marquee" aria-label="Happy Birthday, wish you sweet 18">
+        <div class="marquee-track">
+          <span>🎉 Happy Birthday, wish you sweet 18 ✨</span>
+          <span>🎂 Happy Birthday, wish you sweet 18 💛</span>
+          <span>🎉 Happy Birthday, wish you sweet 18 ✨</span>
+          <span>🎂 Happy Birthday, wish you sweet 18 💛</span>
+          <span>🎉 Happy Birthday, wish you sweet 18 ✨</span>
+          <span>🎂 Happy Birthday, wish you sweet 18 💛</span>
         </div>
+      </div>
+
+      <!-- CHỖ CHÈN 4 GIF USAGI: đặt tên file usagi-1.gif -> usagi-4.gif trong cùng thư mục GitHub -->
+      <div class="usagi-stage">
+        <div class="usagi-squad">
+          <div class="usagi-card">
+            <img src="usagi-1.gif" alt="Usagi cheering 1"
+                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Crect width=%22200%22 height=%22200%22 rx=%2224%22 fill=%22%23fff9db%22/%3E%3Cellipse cx=%2282%22 cy=%2246%22 rx=%2211%22 ry=%2234%22 transform=%22rotate(-8 82 46)%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Cellipse cx=%22118%22 cy=%2246%22 rx=%2211%22 ry=%2234%22 transform=%22rotate(8 118 46)%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Ccircle cx=%22100%22 cy=%22112%22 r=%2254%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Ccircle cx=%2282%22 cy=%22104%22 r=%225%22 fill=%22%234a3d24%22/%3E%3Ccircle cx=%22118%22 cy=%22104%22 r=%225%22 fill=%22%234a3d24%22/%3E%3Cellipse cx=%2268%22 cy=%22116%22 rx=%2210%22 ry=%226%22 fill=%22%23ffb3ba%22/%3E%3Cellipse cx=%22132%22 cy=%22116%22 rx=%2210%22 ry=%226%22 fill=%22%23ffb3ba%22/%3E%3Cpath d=%22M92 118 Q100 132 108 118 Z%22 fill=%22%23ff8fa3%22 stroke=%22%234a3d24%22 stroke-width=%223%22/%3E%3Ctext x=%22100%22 y=%22188%22 font-size=%2213%22 font-family=%22sans-serif%22 fill=%22%239c6214%22 text-anchor=%22middle%22%3Eusagi-1.gif%3C/text%3E%3C/svg%3E'" />
+          </div>
+
+          <div class="usagi-card">
+            <img src="usagi-2.gif" alt="Usagi cheering 2"
+                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Crect width=%22200%22 height=%22200%22 rx=%2224%22 fill=%22%23fff9db%22/%3E%3Cellipse cx=%2282%22 cy=%2246%22 rx=%2211%22 ry=%2234%22 transform=%22rotate(-8 82 46)%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Cellipse cx=%22118%22 cy=%2246%22 rx=%2211%22 ry=%2234%22 transform=%22rotate(8 118 46)%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Ccircle cx=%22100%22 cy=%22112%22 r=%2254%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Ccircle cx=%2282%22 cy=%22104%22 r=%225%22 fill=%22%234a3d24%22/%3E%3Ccircle cx=%22118%22 cy=%22104%22 r=%225%22 fill=%22%234a3d24%22/%3E%3Cellipse cx=%2268%22 cy=%22116%22 rx=%2210%22 ry=%226%22 fill=%22%23ffb3ba%22/%3E%3Cellipse cx=%22132%22 cy=%22116%22 rx=%2210%22 ry=%226%22 fill=%22%23ffb3ba%22/%3E%3Cpath d=%22M92 118 Q100 132 108 118 Z%22 fill=%22%23ff8fa3%22 stroke=%22%234a3d24%22 stroke-width=%223%22/%3E%3Ctext x=%22100%22 y=%22188%22 font-size=%2213%22 font-family=%22sans-serif%22 fill=%22%239c6214%22 text-anchor=%22middle%22%3Eusagi-2.gif%3C/text%3E%3C/svg%3E'" />
+          </div>
+
+          <div class="usagi-card">
+            <img src="usagi-3.gif" alt="Usagi cheering 3"
+                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Crect width=%22200%22 height=%22200%22 rx=%2224%22 fill=%22%23fff9db%22/%3E%3Cellipse cx=%2282%22 cy=%2246%22 rx=%2211%22 ry=%2234%22 transform=%22rotate(-8 82 46)%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Cellipse cx=%22118%22 cy=%2246%22 rx=%2211%22 ry=%2234%22 transform=%22rotate(8 118 46)%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Ccircle cx=%22100%22 cy=%22112%22 r=%2254%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Ccircle cx=%2282%22 cy=%22104%22 r=%225%22 fill=%22%234a3d24%22/%3E%3Ccircle cx=%22118%22 cy=%22104%22 r=%225%22 fill=%22%234a3d24%22/%3E%3Cellipse cx=%2268%22 cy=%22116%22 rx=%2210%22 ry=%226%22 fill=%22%23ffb3ba%22/%3E%3Cellipse cx=%22132%22 cy=%22116%22 rx=%2210%22 ry=%226%22 fill=%22%23ffb3ba%22/%3E%3Cpath d=%22M92 118 Q100 132 108 118 Z%22 fill=%22%23ff8fa3%22 stroke=%22%234a3d24%22 stroke-width=%223%22/%3E%3Ctext x=%22100%22 y=%22188%22 font-size=%2213%22 font-family=%22sans-serif%22 fill=%22%239c6214%22 text-anchor=%22middle%22%3Eusagi-3.gif%3C/text%3E%3C/svg%3E'" />
+          </div>
+
+          <div class="usagi-card">
+            <img src="usagi-4.gif" alt="Usagi cheering 4"
+                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Crect width=%22200%22 height=%22200%22 rx=%2224%22 fill=%22%23fff9db%22/%3E%3Cellipse cx=%2282%22 cy=%2246%22 rx=%2211%22 ry=%2234%22 transform=%22rotate(-8 82 46)%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Cellipse cx=%22118%22 cy=%2246%22 rx=%2211%22 ry=%2234%22 transform=%22rotate(8 118 46)%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Ccircle cx=%22100%22 cy=%22112%22 r=%2254%22 fill=%22%23fff3b8%22 stroke=%22%234a3d24%22 stroke-width=%224%22/%3E%3Ccircle cx=%2282%22 cy=%22104%22 r=%225%22 fill=%22%234a3d24%22/%3E%3Ccircle cx=%22118%22 cy=%22104%22 r=%225%22 fill=%22%234a3d24%22/%3E%3Cellipse cx=%2268%22 cy=%22116%22 rx=%2210%22 ry=%226%22 fill=%22%23ffb3ba%22/%3E%3Cellipse cx=%22132%22 cy=%22116%22 rx=%2210%22 ry=%226%22 fill=%22%23ffb3ba%22/%3E%3Cpath d=%22M92 118 Q100 132 108 118 Z%22 fill=%22%23ff8fa3%22 stroke=%22%234a3d24%22 stroke-width=%223%22/%3E%3Ctext x=%22100%22 y=%22188%22 font-size=%2213%22 font-family=%22sans-serif%22 fill=%22%239c6214%22 text-anchor=%22middle%22%3Eusagi-4.gif%3C/text%3E%3C/svg%3E'" />
+          </div>
+        </div>
+
+        <p class="finale-sign">Una! Yaha! Happy 18th Birthday Cát Tiên ♥</p>
       </div>
     </section>
   </main>
+
+  <!-- KHUNG ĐỌC TOÀN VĂN TỪNG BỨC THƯ KHI BẤM VÀO -->
+  <div class="letter-modal" id="letterModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <article class="letter-paper">
+      <button class="close-modal-btn" id="closeModalBtn" type="button" aria-label="Close letter">✕</button>
+      <h3 id="modalTitle">From me</h3>
+      <div id="modalBody"></div>
+    </article>
+  </div>
 
   <script>
     const canvas = document.getElementById("confettiCanvas");
@@ -1141,7 +1445,7 @@
       launchConfetti(190);
     });
 
-    // Bấm vào từng khung Polaroid để lật mở/úp ảnh (kèm pháo giấy nhỏ khi mở)
+    // Bấm vào từng khung Polaroid để lật mở/úp ảnh
     document.querySelectorAll(".photo").forEach((card) => {
       card.addEventListener("click", () => {
         const revealed = card.classList.toggle("revealed");
@@ -1151,25 +1455,136 @@
       });
     });
 
-    const letterEnvelope = document.getElementById("letterEnvelope");
+    // =======================================================
+    // XỬ LÝ PHONG BÌ -> HIỆN 2 THƯ NGHIÊNG -> BẤM ĐỌC TỪNG THƯ
+    // =======================================================
+    const envelopeStage = document.getElementById("envelopeStage");
+    const envelopeBtn = document.getElementById("envelopeBtn");
     const envelopeLabel = document.getElementById("envelopeLabel");
+    const letterModal = document.getElementById("letterModal");
+    const closeModalBtn = document.getElementById("closeModalBtn");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalBody = document.getElementById("modalBody");
 
-    letterEnvelope.addEventListener("click", () => {
-      const isOpen = letterEnvelope.classList.toggle("open");
-      letterEnvelope.setAttribute("aria-expanded", String(isOpen));
+    // NỘI DUNG 2 BỨC THƯ (Bạn sửa lời chúc của bạn & bạn thân ở đây nhé!)
+    const lettersData = {
+      letter1: {
+        title: "From me",
+        html: `
+          <p>Happy birthday to someone who makes ordinary days feel brighter. Thank you for every conversation, every adventure, and every moment of comfort you’ve given me.</p>
+          <p>I hope this year brings you unexpected happiness, beautiful memories, and everything you have been dreaming about. You deserve to be celebrated not only today, but every day.</p>
+          <p class="from">With love, always ♥</p>
+        `
+      },
+      letter2: {
+        title: "From my friend",
+        html: `
+          <p>Happy birthday! You are the kind of person who makes everyone around you feel happier, safer, and more understood.</p>
+          <p>I hope your birthday is full of good surprises, your favourite food, loud laughter, and the people who mean the most to you. Here’s to another unforgettable year together!</p>
+          <p class="from">Lots of love, from your friend</p>
+        `
+      }
+    };
+
+    envelopeBtn.addEventListener("click", () => {
+      const isOpen = envelopeStage.classList.toggle("open");
+      envelopeBtn.setAttribute("aria-expanded", String(isOpen));
       envelopeLabel.textContent = isOpen
-        ? "Keep this memory open ♥"
-        : "Tap to open my letter";
+        ? "Tap on each letter to read it!"
+        : "Tap the wax seal to open the envelope";
 
       if (isOpen) {
-        launchConfetti(60);
+        launchConfetti(70);
       }
     });
 
+    document.querySelectorAll(".mini-letter").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const key = btn.getAttribute("data-letter");
+        const data = lettersData[key];
+        if (!data) return;
+        modalTitle.textContent = data.title;
+        modalBody.innerHTML = data.html;
+        letterModal.classList.add("show");
+      });
+    });
+
+    closeModalBtn.addEventListener("click", () => {
+      letterModal.classList.remove("show");
+    });
+
+    letterModal.addEventListener("click", (e) => {
+      if (e.target === letterModal) {
+        letterModal.classList.remove("show");
+      }
+    });
+
+    // =======================================================
+    // GIAI ĐIỆU HỘP NHẠC "HAPPY BIRTHDAY TO YOU" KHI THỔI NẾN
+    // =======================================================
+    let audioCtx = null;
+    let isPlayingSong = false;
+
+    function playHappyBirthdaySong() {
+      if (isPlayingSong) return;
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) return;
+
+      if (!audioCtx) {
+        audioCtx = new AudioContext();
+      }
+      if (audioCtx.state === "suspended") {
+        audioCtx.resume();
+      }
+
+      isPlayingSong = true;
+      const musicBtn = document.getElementById("musicBtn");
+      musicBtn.textContent = "🎶 Playing Happy Birthday...";
+
+      // Nốt nhạc (tần số Hz, độ dài giây)
+      const notes = [
+        [261.63, 0.35], [261.63, 0.25], [293.66, 0.6], [261.63, 0.6], [349.23, 0.6], [329.63, 1.1],
+        [261.63, 0.35], [261.63, 0.25], [293.66, 0.6], [261.63, 0.6], [392.00, 0.6], [349.23, 1.1],
+        [261.63, 0.35], [261.63, 0.25], [523.25, 0.6], [440.00, 0.6], [349.23, 0.6], [329.63, 0.6], [293.66, 1.1],
+        [466.16, 0.35], [466.16, 0.25], [440.00, 0.6], [349.23, 0.6], [392.00, 0.6], [349.23, 1.3]
+      ];
+
+      let time = audioCtx.currentTime + 0.05;
+
+      notes.forEach(([freq, dur]) => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = "triangle"; // Âm thanh ấm kiểu hộp nhạc
+        osc.frequency.setValueAtTime(freq, time);
+
+        gain.gain.setValueAtTime(0.001, time);
+        gain.gain.exponentialRampToValueAtTime(0.22, time + 0.04);
+        gain.gain.exponentialRampToValueAtTime(0.001, time + dur);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(time);
+        osc.stop(time + dur + 0.02);
+
+        time += dur + 0.06;
+      });
+
+      const totalDuration = (time - audioCtx.currentTime) * 1000;
+      setTimeout(() => {
+        isPlayingSong = false;
+        musicBtn.textContent = "🎵 Replay Happy Birthday Song";
+      }, totalDuration);
+    }
+
     const cake = document.getElementById("cake");
     const cakeMessage = document.getElementById("cakeMessage");
+    const musicBtn = document.getElementById("musicBtn");
+
+    musicBtn.addEventListener("click", playHappyBirthdaySong);
 
     cake.addEventListener("click", () => {
+      playHappyBirthdaySong();
+
       if (cake.classList.contains("blown")) {
         return;
       }
