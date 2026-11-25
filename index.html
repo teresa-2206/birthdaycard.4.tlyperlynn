@@ -35,33 +35,6 @@
       font: inherit;
     }
 
-    /* Nút bật/tắt nhạc nền tự lặp lại cố định ở góc màn hình */
-    .floating-music-btn {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      z-index: 950;
-      padding: 12px 18px;
-      border: 2px solid #ffffff;
-      border-radius: 999px;
-      background: var(--pink-dark);
-      color: #ffffff;
-      font-family: system-ui, sans-serif;
-      font-weight: 700;
-      font-size: 0.88rem;
-      box-shadow: 0 10px 26px rgba(156, 98, 20, 0.32);
-      cursor: pointer;
-      transition: transform 180ms ease, background 180ms ease;
-    }
-
-    .floating-music-btn:hover {
-      transform: translateY(-2px);
-    }
-
-    .floating-music-btn.playing {
-      background: #7e9d87;
-    }
-
     .opening {
       position: relative;
       min-height: 100vh;
@@ -217,7 +190,7 @@
     .envelope-box:focus-visible,
     .mini-letter:focus-visible,
     .cake:focus-visible,
-    .floating-music-btn:focus-visible {
+    .photo:focus-visible {
       outline: 4px solid var(--ink);
       outline-offset: 5px;
     }
@@ -263,7 +236,7 @@
     }
 
     /* =======================================================
-       PHẦN 8 ẢNH KỶ NIỆM: HIỂN THỊ SẴN 4 ẢNH 1 TRANG POLAROID
+       PHẦN 8 ẢNH KỶ NIỆM: 4 ẢNH 1 TRANG POLAROID, LƯỚT XUỐNG CÓ 4 ẢNH TIẾP
        ======================================================= */
     .memories {
       position: relative;
@@ -303,6 +276,7 @@
       border: 1px solid #f0e4c3;
       border-radius: 4px;
       box-shadow: 0 18px 36px rgba(110, 88, 42, 0.16);
+      cursor: pointer;
       overflow: visible;
       transform: translate(var(--tx, 0px), var(--ty, 0px)) rotate(var(--tilt, 0deg));
       transition: transform 280ms cubic-bezier(.2, .8, .2, 1), box-shadow 280ms ease;
@@ -439,125 +413,47 @@
       height: 100%;
       display: block;
       object-fit: cover;
+      opacity: 0;
+      transform: scale(1.08);
+      transition: opacity 500ms ease, transform 500ms ease;
     }
 
-    /* =======================================================
-       PHẦN BÁNH KEM (NẰM NGAY SAU ẢNH KỶ NIỆM)
-       ======================================================= */
-    .cake-section {
-      min-height: 660px;
-      background: linear-gradient(180deg, #fff3c4, #fffdf2);
-    }
-
-    .cake-wrap {
+    .photo-cover {
+      position: absolute;
+      inset: 0;
       display: grid;
-      justify-items: center;
-    }
-
-    .cake {
-      position: relative;
-      width: min(430px, 82vw);
-      height: 270px;
-      margin-top: 40px;
-      background: none;
-      border: 0;
-      cursor: pointer;
-    }
-
-    .cake-stand {
-      position: absolute;
-      left: 50%;
-      bottom: 0;
-      width: 112%;
-      height: 24px;
-      background: #c7ab6b;
-      border-radius: 50%;
-      transform: translateX(-50%);
-    }
-
-    .cake-base {
-      position: absolute;
-      left: 50%;
-      bottom: 15px;
-      width: 88%;
-      height: 150px;
+      place-content: center;
+      gap: 6px;
       background:
-        radial-gradient(circle at 12% 20%, #fff 0 8px, transparent 9px),
-        radial-gradient(circle at 32% 20%, #fff 0 8px, transparent 9px),
-        radial-gradient(circle at 52% 20%, #fff 0 8px, transparent 9px),
-        radial-gradient(circle at 72% 20%, #fff 0 8px, transparent 9px),
-        radial-gradient(circle at 92% 20%, #fff 0 8px, transparent 9px),
-        linear-gradient(#ffe082 0 25%, #ffd257 26% 100%);
-      border-radius: 18px 18px 12px 12px;
-      box-shadow: inset 0 -18px rgba(166, 118, 24, 0.14);
-      transform: translateX(-50%);
-    }
-
-    .candles {
-      position: absolute;
-      z-index: 2;
-      left: 50%;
-      bottom: 150px;
-      width: 78%;
-      display: flex;
-      justify-content: space-around;
-      transform: translateX(-50%);
-    }
-
-    .candle {
-      position: relative;
-      width: 18px;
-      height: 72px;
-      background: repeating-linear-gradient(
-        135deg,
-        #fff 0 8px,
-        #f2b84b 8px 16px
-      );
-      border-radius: 5px 5px 2px 2px;
-    }
-
-    .flame {
-      position: absolute;
-      left: 50%;
-      bottom: 76px;
-      width: 23px;
-      height: 34px;
-      background: radial-gradient(ellipse at bottom, #fffbe0 0 20%, #ffbe2e 21% 55%, #ff8243 56%);
-      border-radius: 50% 50% 48% 48%;
-      transform: translateX(-50%);
-      transform-origin: bottom;
-      animation: flicker 220ms ease-in-out infinite alternate;
-      box-shadow: 0 0 18px #ffca57;
-    }
-
-    .cake.blown .flame {
-      display: none;
-    }
-
-    .cake.blown .candle::after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      bottom: 78px;
-      width: 18px;
-      height: 30px;
-      background: radial-gradient(ellipse, rgba(120, 120, 120, 0.38), transparent 70%);
-      border-radius: 50%;
-      transform: translateX(-50%);
-      animation: smoke 2s ease-out forwards;
-    }
-
-    .cake-message {
-      min-height: 48px;
-      margin-top: 25px;
+        radial-gradient(circle at 20% 25%, rgba(255,255,255,0.6) 0 4px, transparent 5px),
+        radial-gradient(circle at 80% 75%, rgba(255,255,255,0.6) 0 5px, transparent 6px),
+        linear-gradient(135deg, #ffeaa3, #f7d36f);
       color: var(--pink-dark);
-      font-size: 1.25rem;
+      font-family: system-ui, sans-serif;
       font-weight: 700;
+      font-size: 0.95rem;
       text-align: center;
+      transition: opacity 450ms ease, transform 450ms ease;
+    }
+
+    .photo-cover span {
+      font-size: 1.7rem;
+    }
+
+    .photo.revealed .photo-frame img {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .photo.revealed .photo-cover {
+      opacity: 0;
+      transform: scale(1.1);
+      pointer-events: none;
     }
 
     /* =======================================================
-       PHẦN PHONG BÌ THƯ (NẰM DƯỚI SAU PHẦN BÁNH KEM)
+       PHẦN BỨC THƯ: BẤM MỞ PHONG BÌ -> HIỆN 2 THƯ NGHIÊNG NGHIÊNG
+       -> BẤM TỪNG THƯ SẼ PHÓNG TO ĐỌC NỘI DUNG TỪNG NGƯỜI
        ======================================================= */
     .collage-section {
       background: linear-gradient(135deg, #fff9db, #fff0b8);
@@ -584,6 +480,7 @@
       z-index: 1;
     }
 
+    /* Mặt trước túi phong bì che phần dưới 2 lá thư khi chưa mở */
     .envelope-pocket {
       position: absolute;
       inset: 0;
@@ -633,6 +530,7 @@
       transform: translateX(-50%) scale(0.5);
     }
 
+    /* 2 lá thư nghiêng nghiêng nằm trong phong bì và trồi lên khi bấm */
     .two-letters {
       position: absolute;
       inset: 0;
@@ -672,6 +570,7 @@
       right: 4%;
     }
 
+    /* Khi mở phong bì: 2 thư trồi lên nghiêng nghiêng đè nhẹ lên nhau */
     .envelope-stage.open .mini-letter {
       opacity: 1;
       pointer-events: auto;
@@ -829,10 +728,144 @@
     }
 
     /* =======================================================
+       PHẦN BÁNH KEM + NHẠC HAPPY BIRTHDAY TO YOU
+       ======================================================= */
+    .cake-section {
+      min-height: 680px;
+      background: linear-gradient(180deg, #fff3c4, #fffdf2);
+    }
+
+    .cake-wrap {
+      display: grid;
+      justify-items: center;
+    }
+
+    .cake {
+      position: relative;
+      width: min(430px, 82vw);
+      height: 270px;
+      margin-top: 40px;
+      background: none;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .cake-stand {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 112%;
+      height: 24px;
+      background: #c7ab6b;
+      border-radius: 50%;
+      transform: translateX(-50%);
+    }
+
+    .cake-base {
+      position: absolute;
+      left: 50%;
+      bottom: 15px;
+      width: 88%;
+      height: 150px;
+      background:
+        radial-gradient(circle at 12% 20%, #fff 0 8px, transparent 9px),
+        radial-gradient(circle at 32% 20%, #fff 0 8px, transparent 9px),
+        radial-gradient(circle at 52% 20%, #fff 0 8px, transparent 9px),
+        radial-gradient(circle at 72% 20%, #fff 0 8px, transparent 9px),
+        radial-gradient(circle at 92% 20%, #fff 0 8px, transparent 9px),
+        linear-gradient(#ffe082 0 25%, #ffd257 26% 100%);
+      border-radius: 18px 18px 12px 12px;
+      box-shadow: inset 0 -18px rgba(166, 118, 24, 0.14);
+      transform: translateX(-50%);
+    }
+
+    .candles {
+      position: absolute;
+      z-index: 2;
+      left: 50%;
+      bottom: 150px;
+      width: 78%;
+      display: flex;
+      justify-content: space-around;
+      transform: translateX(-50%);
+    }
+
+    .candle {
+      position: relative;
+      width: 18px;
+      height: 72px;
+      background: repeating-linear-gradient(
+        135deg,
+        #fff 0 8px,
+        #f2b84b 8px 16px
+      );
+      border-radius: 5px 5px 2px 2px;
+    }
+
+    .flame {
+      position: absolute;
+      left: 50%;
+      bottom: 76px;
+      width: 23px;
+      height: 34px;
+      background: radial-gradient(ellipse at bottom, #fffbe0 0 20%, #ffbe2e 21% 55%, #ff8243 56%);
+      border-radius: 50% 50% 48% 48%;
+      transform: translateX(-50%);
+      transform-origin: bottom;
+      animation: flicker 220ms ease-in-out infinite alternate;
+      box-shadow: 0 0 18px #ffca57;
+    }
+
+    .cake.blown .flame {
+      display: none;
+    }
+
+    .cake.blown .candle::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 78px;
+      width: 18px;
+      height: 30px;
+      background: radial-gradient(ellipse, rgba(120, 120, 120, 0.38), transparent 70%);
+      border-radius: 50%;
+      transform: translateX(-50%);
+      animation: smoke 2s ease-out forwards;
+    }
+
+    .cake-message {
+      min-height: 48px;
+      margin-top: 25px;
+      color: var(--pink-dark);
+      font-size: 1.25rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .music-btn {
+      margin-top: 10px;
+      padding: 10px 20px;
+      border: 2px solid var(--pink-dark);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--pink-dark);
+      font-family: system-ui, sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 180ms ease, color 180ms ease;
+    }
+
+    .music-btn:hover {
+      background: var(--pink-dark);
+      color: #fff;
+    }
+
+    /* =======================================================
        PHẦN CUỐI CÙNG: BĂNG RÔN CHỮ CHẠY + ĐỘI HÌNH USAGI CHÚC MỪNG
        ======================================================= */
     .finale-section {
-      padding: 70px 0 100px;
+      padding: 70px 0 90px;
       background:
         radial-gradient(circle at 18% 30%, rgba(255, 224, 130, 0.5) 0 10px, transparent 11px),
         radial-gradient(circle at 82% 25%, rgba(242, 190, 76, 0.4) 0 14px, transparent 15px),
@@ -841,6 +874,7 @@
       overflow: hidden;
     }
 
+    /* Băng rôn chữ chạy liên tục */
     .banner-marquee {
       position: relative;
       width: 100%;
@@ -874,6 +908,7 @@
       100% { transform: translateX(-50%); }
     }
 
+    /* Đội hình 4 nhân vật Usagi chúc mừng */
     .usagi-stage {
       width: min(920px, 92%);
       margin: 0 auto;
@@ -1028,13 +1063,6 @@
       .cake {
         height: 230px;
       }
-
-      .floating-music-btn {
-        right: 14px;
-        bottom: 14px;
-        padding: 10px 14px;
-        font-size: 0.82rem;
-      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1055,11 +1083,6 @@
 
 <body>
   <canvas id="confettiCanvas" aria-hidden="true"></canvas>
-
-  <!-- NÚT BẬT/TẮT NHẠC NỀN TỰ LẶP LẠI -->
-  <button class="floating-music-btn" id="bgMusicBtn" type="button" aria-pressed="false">
-    🎵 Bật nhạc nền
-  </button>
 
   <header class="opening" id="opening">
     <!-- 4 ảnh bung ra 4 góc khi bấm nút -->
@@ -1102,126 +1125,104 @@
   </header>
 
   <main>
-    <!-- 1. PHẦN 8 ẢNH KỶ NIỆM: HIỂN THỊ SẴN 4 ẢNH 1 TRANG POLAROID -->
+    <!-- PHẦN 8 ẢNH KỶ NIỆM: 4 ẢNH 1 TRANG, LƯỚT XUỐNG CÓ 4 ẢNH TIẾP -->
     <section class="memories" id="memories">
       <div class="section-inner">
         <h2 class="section-heading">Our Favourite Moments</h2>
         <p class="section-description">
           A few memories, lots of laughter, and every little moment that makes me
-          grateful to have you in my life.
+          grateful to have you in my life. Tap each frame to reveal a memory!
         </p>
 
         <!-- TRANG 1: memory-1.jpg -> memory-4.jpg -->
         <div class="memory-page">
-          <figure class="photo">
+          <button class="photo" type="button" aria-label="Reveal memory 1">
             <span class="photo-deco deco-tl" aria-hidden="true">✨</span>
             <span class="photo-deco deco-br" aria-hidden="true">🎊</span>
             <div class="photo-frame">
               <img src="memory-1.jpg" alt="Memory 1"
                    onerror="this.src='https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=700'" />
+              <div class="photo-cover"><span>✨</span>#1</div>
             </div>
-          </figure>
+          </button>
 
-          <figure class="photo">
+          <button class="photo" type="button" aria-label="Reveal memory 2">
             <span class="photo-deco deco-tr" aria-hidden="true">💛</span>
             <span class="photo-deco deco-bl" aria-hidden="true">🎉</span>
             <div class="photo-frame">
               <img src="memory-2.jpg" alt="Memory 2"
                    onerror="this.src='https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=700'" />
+              <div class="photo-cover"><span>✨</span>#2</div>
             </div>
-          </figure>
+          </button>
 
-          <figure class="photo">
+          <button class="photo" type="button" aria-label="Reveal memory 3">
             <span class="photo-deco deco-tl" aria-hidden="true">🌟</span>
             <span class="photo-deco deco-br" aria-hidden="true">🎈</span>
             <div class="photo-frame">
               <img src="memory-3.jpg" alt="Memory 3"
                    onerror="this.src='https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=700'" />
+              <div class="photo-cover"><span>✨</span>#3</div>
             </div>
-          </figure>
+          </button>
 
-          <figure class="photo">
+          <button class="photo" type="button" aria-label="Reveal memory 4">
             <span class="photo-deco deco-tr" aria-hidden="true">✨</span>
             <span class="photo-deco deco-bl" aria-hidden="true">🧡</span>
             <div class="photo-frame">
               <img src="memory-4.jpg" alt="Memory 4"
                    onerror="this.src='https://images.unsplash.com/photo-1506869640319-fe1a24fd76dc?w=700'" />
+              <div class="photo-cover"><span>✨</span>#4</div>
             </div>
-          </figure>
+          </button>
         </div>
 
         <!-- TRANG 2: memory-5.jpg -> memory-8.jpg -->
         <div class="memory-page">
-          <figure class="photo">
+          <button class="photo" type="button" aria-label="Reveal memory 5">
             <span class="photo-deco deco-tl" aria-hidden="true">🎉</span>
             <span class="photo-deco deco-br" aria-hidden="true">✨</span>
             <div class="photo-frame">
               <img src="memory-5.jpg" alt="Memory 5"
                    onerror="this.src='https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=700'" />
+              <div class="photo-cover"><span>✨</span>#5</div>
             </div>
-          </figure>
+          </button>
 
-          <figure class="photo">
+          <button class="photo" type="button" aria-label="Reveal memory 6">
             <span class="photo-deco deco-tr" aria-hidden="true">🌟</span>
             <span class="photo-deco deco-bl" aria-hidden="true">💛</span>
             <div class="photo-frame">
               <img src="memory-6.jpg" alt="Memory 6"
                    onerror="this.src='https://images.unsplash.com/photo-1523301343968-6a6ebf63c672?w=700'" />
+              <div class="photo-cover"><span>✨</span>#6</div>
             </div>
-          </figure>
+          </button>
 
-          <figure class="photo">
+          <button class="photo" type="button" aria-label="Reveal memory 7">
             <span class="photo-deco deco-tl" aria-hidden="true">🎈</span>
             <span class="photo-deco deco-br" aria-hidden="true">🎊</span>
             <div class="photo-frame">
               <img src="memory-7.jpg" alt="Memory 7"
                    onerror="this.src='https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=700'" />
+              <div class="photo-cover"><span>✨</span>#7</div>
             </div>
-          </figure>
+          </button>
 
-          <figure class="photo">
+          <button class="photo" type="button" aria-label="Reveal memory 8">
             <span class="photo-deco deco-tr" aria-hidden="true">🧡</span>
             <span class="photo-deco deco-bl" aria-hidden="true">✨</span>
             <div class="photo-frame">
               <img src="memory-8.jpg" alt="Memory 8"
                    onerror="this.src='https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=700'" />
+              <div class="photo-cover"><span>✨</span>#8</div>
             </div>
-          </figure>
-        </div>
-      </div>
-    </section>
-
-    <!-- 2. PHẦN THỔI BÁNH KEM -->
-    <section class="cake-section">
-      <div class="section-inner">
-        <h2 class="section-heading">Make a Birthday Wish</h2>
-        <p class="section-description">
-          Close your eyes, make your wish, and tap the cake to blow out the candles!
-        </p>
-
-        <div class="cake-wrap">
-          <button class="cake" id="cake" type="button"
-                  aria-label="Blow out the birthday candles">
-            <span class="cake-stand"></span>
-            <span class="cake-base"></span>
-
-            <span class="candles" aria-hidden="true">
-              <span class="candle"><span class="flame"></span></span>
-              <span class="candle"><span class="flame"></span></span>
-              <span class="candle"><span class="flame"></span></span>
-              <span class="candle"><span class="flame"></span></span>
-              <span class="candle"><span class="flame"></span></span>
-            </span>
           </button>
-
-          <p class="cake-message" id="cakeMessage" aria-live="polite">
-            The candles are waiting for you ✨
-          </p>
         </div>
       </div>
     </section>
 
-    <!-- 3. PHẦN PHONG BÌ 2 LÁ THƯ LỜI CHÚC (NẰM DƯỚI SAU PHẦN BÁNH KEM) -->
+    <!-- PHẦN PHONG BÌ THƯ: BẤM 1 LẦN HIỆN 2 THƯ NGHIÊNG -> BẤM TỪNG THƯ ĐỂ ĐỌC -->
     <section class="collage-section">
       <div class="section-inner">
         <h2 class="section-heading">Letters for You</h2>
@@ -1259,7 +1260,41 @@
       </div>
     </section>
 
-    <!-- 4. PHẦN KẾT CUỐI CÙNG: BĂNG RÔN CHỮ CHẠY + ĐỘI HÌNH USAGI CHÚC MỪNG -->
+    <!-- PHẦN BÁNH KEM + NHẠC HAPPY BIRTHDAY TO YOU -->
+    <section class="cake-section">
+      <div class="section-inner">
+        <h2 class="section-heading">Make a Birthday Wish</h2>
+        <p class="section-description">
+          Close your eyes, make your wish, and tap the cake to blow out the candles!
+        </p>
+
+        <div class="cake-wrap">
+          <button class="cake" id="cake" type="button"
+                  aria-label="Blow out the birthday candles">
+            <span class="cake-stand"></span>
+            <span class="cake-base"></span>
+
+            <span class="candles" aria-hidden="true">
+              <span class="candle"><span class="flame"></span></span>
+              <span class="candle"><span class="flame"></span></span>
+              <span class="candle"><span class="flame"></span></span>
+              <span class="candle"><span class="flame"></span></span>
+              <span class="candle"><span class="flame"></span></span>
+            </span>
+          </button>
+
+          <p class="cake-message" id="cakeMessage" aria-live="polite">
+            The candles are waiting for you ✨
+          </p>
+
+          <button class="music-btn" id="musicBtn" type="button">
+            🎵 Play Happy Birthday Song
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PHẦN KẾT CUỐI CÙNG: BĂNG RÔN CHỮ CHẠY + ĐỘI HÌNH USAGI CHÚC MỪNG -->
     <section class="finale-section">
       <div class="banner-marquee" aria-label="Happy Birthday, wish you sweet 18">
         <div class="marquee-track">
@@ -1272,6 +1307,7 @@
         </div>
       </div>
 
+      <!-- CHỖ CHÈN 4 GIF USAGI: đặt tên file usagi-1.gif -> usagi-4.gif trong cùng thư mục GitHub -->
       <div class="usagi-stage">
         <div class="usagi-squad">
           <div class="usagi-card">
@@ -1409,108 +1445,14 @@
       launchConfetti(190);
     });
 
-    // =======================================================
-    // NÚT NHẠC NỀN HAPPY BIRTHDAY TỰ ĐỘNG PHÁT & TỰ REPLAY
-    // =======================================================
-    const bgMusicBtn = document.getElementById("bgMusicBtn");
-    let audioCtx = null;
-    let isMusicOn = false;
-    let loopTimer = null;
-    let activeOscillators = [];
-
-    function stopBgMusic() {
-      isMusicOn = false;
-      clearTimeout(loopTimer);
-      activeOscillators.forEach((osc) => {
-        try { osc.stop(); } catch (e) {}
-      });
-      activeOscillators = [];
-      bgMusicBtn.classList.remove("playing");
-      bgMusicBtn.setAttribute("aria-pressed", "false");
-      bgMusicBtn.textContent = "🎵 Bật nhạc nền";
-    }
-
-    function scheduleBirthdayLoop() {
-      if (!isMusicOn) return;
-
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      if (!AudioContext) return;
-
-      if (!audioCtx) {
-        audioCtx = new AudioContext();
-      }
-      if (audioCtx.state === "suspended") {
-        audioCtx.resume();
-      }
-
-      const notes = [
-        [261.63, 0.35], [261.63, 0.25], [293.66, 0.6], [261.63, 0.6], [349.23, 0.6], [329.63, 1.1],
-        [261.63, 0.35], [261.63, 0.25], [293.66, 0.6], [261.63, 0.6], [392.00, 0.6], [349.23, 1.1],
-        [261.63, 0.35], [261.63, 0.25], [523.25, 0.6], [440.00, 0.6], [349.23, 0.6], [329.63, 0.6], [293.66, 1.1],
-        [466.16, 0.35], [466.16, 0.25], [440.00, 0.6], [349.23, 0.6], [392.00, 0.6], [349.23, 1.3]
-      ];
-
-      let time = audioCtx.currentTime + 0.05;
-      activeOscillators = [];
-
-      notes.forEach(([freq, dur]) => {
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = "triangle";
-        osc.frequency.setValueAtTime(freq, time);
-
-        gain.gain.setValueAtTime(0.001, time);
-        gain.gain.exponentialRampToValueAtTime(0.18, time + 0.04);
-        gain.gain.exponentialRampToValueAtTime(0.001, time + dur);
-
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start(time);
-        osc.stop(time + dur + 0.02);
-        activeOscillators.push(osc);
-
-        time += dur + 0.06;
-      });
-
-      const loopDurationMs = (time - audioCtx.currentTime + 0.8) * 1000;
-      loopTimer = setTimeout(() => {
-        if (isMusicOn) {
-          scheduleBirthdayLoop();
+    // Bấm vào từng khung Polaroid để lật mở/úp ảnh
+    document.querySelectorAll(".photo").forEach((card) => {
+      card.addEventListener("click", () => {
+        const revealed = card.classList.toggle("revealed");
+        if (revealed) {
+          launchConfetti(35);
         }
-      }, loopDurationMs);
-    }
-
-    bgMusicBtn.addEventListener("click", () => {
-      if (isMusicOn) {
-        stopBgMusic();
-      } else {
-        isMusicOn = true;
-        bgMusicBtn.classList.add("playing");
-        bgMusicBtn.setAttribute("aria-pressed", "true");
-        bgMusicBtn.textContent = "🎶 Đang phát (Tắt)";
-        scheduleBirthdayLoop();
-      }
-    });
-
-    // =======================================================
-    // THỔI BÁNH KEM
-    // =======================================================
-    const cake = document.getElementById("cake");
-    const cakeMessage = document.getElementById("cakeMessage");
-
-    cake.addEventListener("click", () => {
-      if (cake.classList.contains("blown")) {
-        return;
-      }
-
-      cake.classList.add("blown");
-      cake.setAttribute("aria-label", "The birthday candles are blown out");
-      cakeMessage.textContent = "Your wish is on its way! Make sure it comes true ✨";
-      launchConfetti(180);
-
-      setTimeout(() => {
-        cakeMessage.textContent = "One more wish for one more amazing year 🎂";
-      }, 3500);
+      });
     });
 
     // =======================================================
@@ -1524,7 +1466,7 @@
     const modalTitle = document.getElementById("modalTitle");
     const modalBody = document.getElementById("modalBody");
 
-    // NỘI DUNG 2 BỨC THƯ (Sửa lời chúc của bạn & bạn thân ở đây!)
+    // NỘI DUNG 2 BỨC THƯ (Bạn sửa lời chúc của bạn & bạn thân ở đây nhé!)
     const lettersData = {
       letter1: {
         title: "From me",
@@ -1575,6 +1517,86 @@
       if (e.target === letterModal) {
         letterModal.classList.remove("show");
       }
+    });
+
+    // =======================================================
+    // GIAI ĐIỆU HỘP NHẠC "HAPPY BIRTHDAY TO YOU" KHI THỔI NẾN
+    // =======================================================
+    let audioCtx = null;
+    let isPlayingSong = false;
+
+    function playHappyBirthdaySong() {
+      if (isPlayingSong) return;
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) return;
+
+      if (!audioCtx) {
+        audioCtx = new AudioContext();
+      }
+      if (audioCtx.state === "suspended") {
+        audioCtx.resume();
+      }
+
+      isPlayingSong = true;
+      const musicBtn = document.getElementById("musicBtn");
+      musicBtn.textContent = "🎶 Playing Happy Birthday...";
+
+      // Nốt nhạc (tần số Hz, độ dài giây)
+      const notes = [
+        [261.63, 0.35], [261.63, 0.25], [293.66, 0.6], [261.63, 0.6], [349.23, 0.6], [329.63, 1.1],
+        [261.63, 0.35], [261.63, 0.25], [293.66, 0.6], [261.63, 0.6], [392.00, 0.6], [349.23, 1.1],
+        [261.63, 0.35], [261.63, 0.25], [523.25, 0.6], [440.00, 0.6], [349.23, 0.6], [329.63, 0.6], [293.66, 1.1],
+        [466.16, 0.35], [466.16, 0.25], [440.00, 0.6], [349.23, 0.6], [392.00, 0.6], [349.23, 1.3]
+      ];
+
+      let time = audioCtx.currentTime + 0.05;
+
+      notes.forEach(([freq, dur]) => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = "triangle"; // Âm thanh ấm kiểu hộp nhạc
+        osc.frequency.setValueAtTime(freq, time);
+
+        gain.gain.setValueAtTime(0.001, time);
+        gain.gain.exponentialRampToValueAtTime(0.22, time + 0.04);
+        gain.gain.exponentialRampToValueAtTime(0.001, time + dur);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(time);
+        osc.stop(time + dur + 0.02);
+
+        time += dur + 0.06;
+      });
+
+      const totalDuration = (time - audioCtx.currentTime) * 1000;
+      setTimeout(() => {
+        isPlayingSong = false;
+        musicBtn.textContent = "🎵 Replay Happy Birthday Song";
+      }, totalDuration);
+    }
+
+    const cake = document.getElementById("cake");
+    const cakeMessage = document.getElementById("cakeMessage");
+    const musicBtn = document.getElementById("musicBtn");
+
+    musicBtn.addEventListener("click", playHappyBirthdaySong);
+
+    cake.addEventListener("click", () => {
+      playHappyBirthdaySong();
+
+      if (cake.classList.contains("blown")) {
+        return;
+      }
+
+      cake.classList.add("blown");
+      cake.setAttribute("aria-label", "The birthday candles are blown out");
+      cakeMessage.textContent = "Your wish is on its way! Make sure it comes true ✨";
+      launchConfetti(180);
+
+      setTimeout(() => {
+        cakeMessage.textContent = "One more wish for one more amazing year 🎂";
+      }, 3500);
     });
   </script>
 </body>
