@@ -66,7 +66,7 @@
     .corner-photo {
       position: absolute;
       margin: 0;
-      width: clamp(140px, 19vw, 245px);
+      width: clamp(165px, 21vw, 280px);
       padding: 8px 8px 18px;
       background: #ffffff;
       border-radius: 6px;
@@ -190,7 +190,8 @@
 
     .open-button:focus-visible,
     .letter-envelope:focus-visible,
-    .cake:focus-visible {
+    .cake:focus-visible,
+    .photo:focus-visible {
       outline: 4px solid var(--ink);
       outline-offset: 5px;
     }
@@ -235,6 +236,7 @@
       line-height: 1.7;
     }
 
+    /* Phần 8 ảnh kỷ niệm lật mở */
     .memories {
       background:
         linear-gradient(rgba(255, 253, 244, 0.94), rgba(255, 253, 244, 0.94)),
@@ -243,56 +245,72 @@
 
     .photo-grid {
       display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 18px;
-      align-items: center;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 22px;
     }
 
     .photo {
       position: relative;
       margin: 0;
-      overflow: hidden;
-      background: #f7eed2;
-      border: 10px solid white;
-      border-radius: 4px;
+      padding: 0;
+      aspect-ratio: 3 / 4;
+      background: #ffffff;
+      border: 8px solid #ffffff;
+      border-radius: 6px;
       box-shadow: 0 14px 30px rgba(110, 88, 42, 0.14);
+      cursor: pointer;
+      overflow: hidden;
       transform: rotate(var(--tilt, 0deg));
+      transition: transform 250ms ease, box-shadow 250ms ease;
     }
 
-    .photo:nth-child(1) {
-      grid-column: 1 / 6;
-      --tilt: -2deg;
-    }
+    .photo:nth-child(odd) { --tilt: -2deg; }
+    .photo:nth-child(even) { --tilt: 2deg; }
 
-    .photo:nth-child(2) {
-      grid-column: 6 / 13;
-      margin-top: 45px;
-      --tilt: 2deg;
-    }
-
-    .photo:nth-child(3) {
-      grid-column: 2 / 8;
-      --tilt: 1deg;
-    }
-
-    .photo:nth-child(4) {
-      grid-column: 8 / 12;
-      margin-top: -20px;
-      --tilt: -3deg;
+    .photo:hover {
+      transform: scale(1.04) rotate(0deg);
+      box-shadow: 0 18px 36px rgba(110, 88, 42, 0.22);
+      z-index: 2;
     }
 
     .photo img {
       width: 100%;
-      aspect-ratio: 4 / 3;
+      height: 100%;
       display: block;
       object-fit: cover;
+      opacity: 0;
+      transform: scale(1.08);
+      transition: opacity 500ms ease, transform 500ms ease;
     }
 
-    .photo figcaption {
-      padding: 10px 6px 4px;
-      color: #826b3e;
-      font-size: 0.9rem;
+    .photo-cover {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-content: center;
+      gap: 6px;
+      background: linear-gradient(135deg, #ffeaa3, #f7d36f);
+      color: var(--pink-dark);
+      font-family: system-ui, sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
       text-align: center;
+      transition: opacity 450ms ease, transform 450ms ease;
+    }
+
+    .photo-cover span {
+      font-size: 1.6rem;
+    }
+
+    .photo.revealed img {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .photo.revealed .photo-cover {
+      opacity: 0;
+      transform: scale(1.1);
+      pointer-events: none;
     }
 
     .collage-section {
@@ -581,13 +599,13 @@
       .corner-br { bottom: 20px; right: 14px; }
 
       .photo-grid {
-        display: flex;
-        flex-direction: column;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
       }
 
       .photo {
-        width: 92%;
-        margin: 0 auto 20px !important;
+        width: 100%;
+        margin: 0 !important;
       }
 
       .letter-envelope {
@@ -662,7 +680,7 @@
       </h1>
 
       <p class="opening-subtitle" id="openingSubtitle">
-        18 tuổi rồi, giấy tờ ghi người lớn nhưng tâm hồn vẫn đang loading.
+        Guess who just turned 18?.
       </p>
 
       <button class="open-button" id="openButton" type="button">
@@ -680,38 +698,57 @@
       <div class="section-inner">
         <h2 class="section-heading">Our Favourite Moments</h2>
         <p class="section-description">
-          A few memories, lots of laughter, and every little moment that makes me
-          grateful to have you in my life.
+          Kỉ niệm hơn 3 năm qua tụi mìn có nhau!
         </p>
 
         <div class="photo-grid">
-          <figure class="photo">
-            <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=900"
-                 alt="Friends together"
-                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22900%22 height=%22675%22%3E%3Crect width=%22100%25%22 height=%22100%25%22 fill=%22%23f7eed2%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2240%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EOur first photo%3C/text%3E%3C/svg%3E'" />
-            <figcaption>Our first favourite memory</figcaption>
-          </figure>
+          <button class="photo" type="button" aria-label="Reveal memory 1">
+            <img src="memory-1.jpg" alt="Memory 1"
+                 onerror="this.src='https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=700'" />
+            <div class="photo-cover"><span>✨</span>#1</div>
+          </button>
 
-          <figure class="photo">
-            <img src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=900"
-                 alt="Friends celebrating"
-                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22900%22 height=%22675%22%3E%3Crect width=%22100%25%22 height=%22100%25%22 fill=%22%23f7eed2%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2240%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EAnother memory%3C/text%3E%3C/svg%3E'" />
-            <figcaption>The day we laughed nonstop</figcaption>
-          </figure>
+          <button class="photo" type="button" aria-label="Reveal memory 2">
+            <img src="memory-2.jpg" alt="Memory 2"
+                 onerror="this.src='https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=700'" />
+            <div class="photo-cover"><span>✨</span>#2</div>
+          </button>
 
-          <figure class="photo">
-            <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=900"
-                 alt="Friends smiling"
-                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22900%22 height=%22675%22%3E%3Crect width=%22100%25%22 height=%22100%25%22 fill=%22%23f7eed2%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2240%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EOur smiles%3C/text%3E%3C/svg%3E'" />
-            <figcaption>One of many silly adventures</figcaption>
-          </figure>
+          <button class="photo" type="button" aria-label="Reveal memory 3">
+            <img src="memory-3.jpg" alt="Memory 3"
+                 onerror="this.src='https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=700'" />
+            <div class="photo-cover"><span>✨</span>#3</div>
+          </button>
 
-          <figure class="photo">
-            <img src="https://images.unsplash.com/photo-1506869640319-fe1a24fd76dc?w=900"
-                 alt="Friends spending time together"
-                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22900%22 height=%22675%22%3E%3Crect width=%22100%25%22 height=%22100%25%22 fill=%22%23f7eed2%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2240%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EThe best times%3C/text%3E%3C/svg%3E'" />
-            <figcaption>More memories to come</figcaption>
-          </figure>
+          <button class="photo" type="button" aria-label="Reveal memory 4">
+            <img src="memory-4.jpg" alt="Memory 4"
+                 onerror="this.src='https://images.unsplash.com/photo-1506869640319-fe1a24fd76dc?w=700'" />
+            <div class="photo-cover"><span>✨</span>#4</div>
+          </button>
+
+          <button class="photo" type="button" aria-label="Reveal memory 5">
+            <img src="memory-5.jpg" alt="Memory 5"
+                 onerror="this.src='https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=700'" />
+            <div class="photo-cover"><span>✨</span>#5</div>
+          </button>
+
+          <button class="photo" type="button" aria-label="Reveal memory 6">
+            <img src="memory-6.jpg" alt="Memory 6"
+                 onerror="this.src='https://images.unsplash.com/photo-1523301343968-6a6ebf63c672?w=700'" />
+            <div class="photo-cover"><span>✨</span>#6</div>
+          </button>
+
+          <button class="photo" type="button" aria-label="Reveal memory 7">
+            <img src="memory-7.jpg" alt="Memory 7"
+                 onerror="this.src='https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=700'" />
+            <div class="photo-cover"><span>✨</span>#7</div>
+          </button>
+
+          <button class="photo" type="button" aria-label="Reveal memory 8">
+            <img src="memory-8.jpg" alt="Memory 8"
+                 onerror="this.src='https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=700'" />
+            <div class="photo-cover"><span>✨</span>#8</div>
+          </button>
         </div>
       </div>
     </section>
@@ -912,6 +949,13 @@
       launchConfetti(190);
     });
 
+    // Bấm vào từng thẻ kỷ niệm để lật mở/úp ảnh
+    document.querySelectorAll(".photo").forEach((card) => {
+      card.addEventListener("click", () => {
+        card.classList.toggle("revealed");
+      });
+    });
+
     const letterEnvelope = document.getElementById("letterEnvelope");
     const envelopeLabel = document.getElementById("envelopeLabel");
 
@@ -946,4 +990,4 @@
     });
   </script>
 </body>
-</html> tui nhập code này vô github giờ deploy tui bấm tap button nó kh hiện được gì lun...
+</html>
