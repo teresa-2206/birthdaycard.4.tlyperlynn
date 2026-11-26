@@ -1095,176 +1095,145 @@
   </main>
 
   <!-- KHUNG ĐỌC TOÀN VĂN TỪNG BỨC THƯ KHI BẤM VÀO -->
-  <div class="letter-modal" id="letterModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <article class="letter-paper">
-      <button class="close-modal-btn" id="closeModalBtn" type="button" aria-label="Close letter">✕</button>
-      <h3 id="modalTitle">From me</h3>
-      <div id="modalBody"></div>
-    </article>
+  <div class="letter-modal" id="letterModal" role="dialog" aria-modal="true">
+    <div class="letter-paper" style="padding: 16px; background: #fffdf5;">
+      <button class="close-modal-btn" id="closeModalBtn" type="button" aria-label="Đóng thư" style="z-index: 10;">✕</button>
+      <div id="letterContent"></div>
+    </div>
   </div>
 
   <script>
-    const canvas = document.getElementById("confettiCanvas");
-    const context = canvas.getContext("2d");
+    // 1. MỞ TRANG ĐẦU + BUNG 4 ẢNH GÓC + PHÁO GIẤY + NHẠC
     const openButton = document.getElementById("openButton");
     const birthdayTitle = document.getElementById("birthdayTitle");
+    const openingSubtitle = document.getElementById("openingSubtitle");
     const cornerPhotos = document.getElementById("cornerPhotos");
     const scrollNote = document.getElementById("scrollNote");
-
-    let pieces = [];
-    let confettiFrame = null;
-
-    function resizeCanvas() {
-      const scale = window.devicePixelRatio || 1;
-      canvas.width = window.innerWidth * scale;
-      canvas.height = window.innerHeight * scale;
-      canvas.style.width = window.innerWidth + "px";
-      canvas.style.height = window.innerHeight + "px";
-      context.setTransform(scale, 0, 0, scale, 0, 0);
-    }
-
-    function createConfetti(amount = 160) {
-      const colors = ["#ffd166", "#f2be4c", "#ffe89e", "#e6a82e", "#fff3b8", "#ffffff"];
-      pieces = [];
-      for (let i = 0; i < amount; i++) {
-        pieces.push({
-          x: Math.random() * window.innerWidth,
-          y: -20 - Math.random() * window.innerHeight * 0.5,
-          width: 6 + Math.random() * 8,
-          height: 8 + Math.random() * 12,
-          color: colors[Math.floor(Math.random() * colors.length)],
-          rotation: Math.random() * Math.PI,
-          speed: 2.5 + Math.random() * 5,
-          drift: -2 + Math.random() * 4,
-          spin: -0.12 + Math.random() * 0.24
-        });
-      }
-    }
-
-    function drawConfetti() {
-      context.clearRect(0, 0, window.innerWidth, window.innerHeight);
-      for (const piece of pieces) {
-        context.save();
-        context.translate(piece.x, piece.y);
-        context.rotate(piece.rotation);
-        context.fillStyle = piece.color;
-        context.fillRect(-piece.width / 2, -piece.height / 2, piece.width, piece.height);
-        context.restore();
-
-        piece.y += piece.speed;
-        piece.x += piece.drift;
-        piece.rotation += piece.spin;
-      }
-      pieces = pieces.filter(piece => piece.y < window.innerHeight + 30);
-      if (pieces.length) {
-        confettiFrame = requestAnimationFrame(drawConfetti);
-      } else {
-        context.clearRect(0, 0, window.innerWidth, window.innerHeight);
-      }
-    }
-
-    function launchConfetti(amount) {
-      cancelAnimationFrame(confettiFrame);
-      createConfetti(amount);
-      drawConfetti();
-    }
-
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
-
-    // Bấm nút Tap ở trang đầu mới hiện Happy 18th Birthday + 4 ảnh góc + pháo giấy
-    openButton.addEventListener("click", () => {
-      birthdayTitle.classList.add("show");
-      cornerPhotos.classList.add("show");
-      openButton.classList.add("opened");
-      openButton.textContent = "Happy Birthday! 🎉";
-      openButton.disabled = true;
-      scrollNote.classList.add("show");
-      launchConfetti(190);
-    });
-
-    // Nút nhạc nền tự phát & tự lặp lại
-    const bgMusicBtn = document.getElementById("bgMusicBtn");
     const bgAudio = document.getElementById("bgAudio");
+    const bgMusicBtn = document.getElementById("bgMusicBtn");
+
+    function updateMusicBtn(isPlaying) {
+      bgMusicBtn.textContent = isPlaying ? "⏸️ Tắt nhạc nền" : "🎵 Bật nhạc nền";
+      bgMusicBtn.classList.toggle("playing", isPlaying);
+      bgMusicBtn.setAttribute("aria-pressed", String(isPlaying));
+    }
 
     bgMusicBtn.addEventListener("click", () => {
       if (bgAudio.paused) {
-        bgAudio.play().then(() => {
-          bgMusicBtn.classList.add("playing");
-          bgMusicBtn.setAttribute("aria-pressed", "true");
-          bgMusicBtn.textContent = "🎶 Đang phát (Tắt)";
-        }).catch(() => {
-          alert("Chưa tìm thấy file nhac-nen.mp3 trên GitHub!");
-        });
+        bgAudio.play().then(() => updateMusicBtn(true)).catch(() => {});
       } else {
         bgAudio.pause();
-        bgMusicBtn.classList.remove("playing");
-        bgMusicBtn.setAttribute("aria-pressed", "false");
-        bgMusicBtn.textContent = "🎵 Bật nhạc nền";
+        updateMusicBtn(false);
       }
     });
 
-    // Thổi bánh kem
+    openButton.addEventListener("click", () => {
+      birthdayTitle.classList.add("show");
+      cornerPhotos.classList.add("show");
+      scrollNote.classList.add("show");
+      openingSubtitle.textContent = "HAPPY 18TH BIRTHDAY CÁT TIÊN 🎉";
+      openButton.textContent = "Opened! 🎉";
+      openButton.classList.add("opened");
+      launchConfetti(140);
+      if (bgAudio.paused) {
+        bgAudio.play().then(() => updateMusicBtn(true)).catch(() => {});
+      }
+    });
+
+    // 2. THỔI BÁNH KEM
     const cake = document.getElementById("cake");
     const cakeMessage = document.getElementById("cakeMessage");
-
     cake.addEventListener("click", () => {
-      if (cake.classList.contains("blown")) return;
-      cake.classList.add("blown");
-      cake.setAttribute("aria-label", "The birthday candles are blown out");
-      cakeMessage.textContent = "elelelelele ghi j ch bic ✨";
-      launchConfetti(180);
-      setTimeout(() => {
-        cakeMessage.textContent = "elelelellelelelelel 🎂";
-      }, 3500);
+      cake.classList.toggle("blown");
+      if (cake.classList.contains("blown")) {
+        cakeMessage.textContent = "Ước gì thành nấy nha bà 18 tuổi!! 🎂✨";
+        launchConfetti(160);
+      } else {
+        cakeMessage.textContent = "✨Háp pi háp pi háp pi hạp pì✨";
+      }
     });
 
-    // Phong bì 2 lá thư
+    // 3. MỞ PHONG BÌ & BẤM XEM 2 ẢNH THƯ
     const envelopeStage = document.getElementById("envelopeStage");
     const envelopeBtn = document.getElementById("envelopeBtn");
-    const envelopeLabel = document.getElementById("envelopeLabel");
     const letterModal = document.getElementById("letterModal");
+    const letterContent = document.getElementById("letterContent");
     const closeModalBtn = document.getElementById("closeModalBtn");
-    const modalTitle = document.getElementById("modalTitle");
-    const modalBody = document.getElementById("modalBody");
 
-    // SỬA LỜI CHÚC CỦA BẠN & BẠN THÂN Ở ĐÂY:
     const lettersData = {
-      letter1: {
-        title: "From me",
-        html: `
-          <p>blablabla♥</p>
-        `
-      },
-      letter2: {
-        title: "From my friend",
-        html: `
-          <p>blablabla</p>
-        `
-      }
+      letter1: `<img src="thu-1.jpg" alt="Thư chúc mừng 1" style="width: 100%; height: auto; border-radius: 6px; display: block;" />`,
+      letter2: `<img src="thu-2.jpg" alt="Thư chúc mừng 2" style="width: 100%; height: auto; border-radius: 6px; display: block;" />`
     };
 
     envelopeBtn.addEventListener("click", () => {
       const isOpen = envelopeStage.classList.toggle("open");
       envelopeBtn.setAttribute("aria-expanded", String(isOpen));
-      envelopeLabel.textContent = isOpen ? "blablalblalalelelel!" : "elelellelellelelele";
-      if (isOpen) launchConfetti(70);
+      if (isOpen) launchConfetti(80);
     });
 
     document.querySelectorAll(".mini-letter").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const data = lettersData[btn.getAttribute("data-letter")];
-        if (!data) return;
-        modalTitle.textContent = data.title;
-        modalBody.innerHTML = data.html;
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const key = btn.getAttribute("data-letter");
+        letterContent.innerHTML = lettersData[key] || "";
         letterModal.classList.add("show");
       });
     });
 
-    closeModalBtn.addEventListener("click", () => letterModal.classList.remove("show"));
+    closeModalBtn.addEventListener("click", () => {
+      letterModal.classList.remove("show");
+    });
+
     letterModal.addEventListener("click", (e) => {
       if (e.target === letterModal) letterModal.classList.remove("show");
     });
+
+    // 4. PHÁO GIẤY
+    const canvas = document.getElementById("confettiCanvas");
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    function launchConfetti(count = 100) {
+      const colors = ["#f2be4c", "#ff8a5b", "#7e9d87", "#ffd97d", "#e66a84"];
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: -10 - Math.random() * 120,
+          w: 7 + Math.random() * 6,
+          h: 10 + Math.random() * 8,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          vx: (Math.random() - 0.5) * 4,
+          vy: 2 + Math.random() * 4,
+          rot: Math.random() * 360,
+          vRot: (Math.random() - 0.5) * 10
+        });
+      }
+    }
+
+    function animateConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles = particles.filter((p) => p.y < canvas.height + 30);
+      for (const p of particles) {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.rot += p.vRot;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate((p.rot * Math.PI) / 180);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        ctx.restore();
+      }
+      requestAnimationFrame(animateConfetti);
+    }
+    animateConfetti();
   </script>
 </body>
 </html>
